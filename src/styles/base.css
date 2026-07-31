@@ -1,0 +1,23 @@
+/* Miami Tech Media — minimal base reset
+   Carried over from the equivalent reset in legacy/index.html.
+   No new styling decisions introduced. */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'General Sans', sans-serif;
+  background: var(--white);
+  color: var(--slate);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

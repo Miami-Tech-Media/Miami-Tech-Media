@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miami Tech Media — AI-Powered Creative Studio</title>
+<meta name="description" content="Miami Tech Media helps startups, tech companies, and organizations grow through strategic storytelling, trusted partnerships, and AI-forward marketing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=General+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #2563EB;
+    --slate: #334155;
+    --white: #F8FAFC;
+    --cyan: #22D3EE;
+    --rich: #0F172A;
+    --gray: #E2E8F0;
+    --mid: #64748B;
+    --light: #F1F5F9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'General Sans', sans-serif;
+    background: var(--white);
+    color: var(--slate);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: var(--rich);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .logo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.01em;
+    text-decoration: none;
+  }
+  .logo span { color: var(--cyan); }
+  .nav-links {
+    display: flex;
+    gap: 1.75rem;
+    align-items: center;
+  }
+  .nav-link {
+    font-size: .85rem;
+    color: rgba(255,255,255,.45);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color .2s;
+    text-decoration: none;
+  }
+  .nav-link:hover { color: rgba(255,255,255,.85); }
+  .nav-cta {
+    background: var(--blue);
+    color: #fff;
+    padding: .45rem 1.15rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity .2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-cta:hover { opacity: .85; }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--white);
+    padding: 5.5rem 2.5rem 5.75rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--gray);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 420px;
+    background: radial-gradient(ellipse, rgba(37,99,235,.055) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(37,99,235,.07);
+    border: 1px solid rgba(37,99,235,.14);
+    color: var(--blue);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: .3rem .9rem;
+    border-radius: 100px;
+    margin-bottom: 1.85rem;
+    position: relative;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background: var(--cyan);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    font-weight: 700;
+    color: var(--rich);
+    line-height: 1.13;
+    letter-spacing: -.03em;
+    max-width: 700px;
+    margin: 0 auto 1.1rem;
+    position: relative;
+  }
+  .hero h1 em {
+    color: var(--blue);
+    font-style: normal;
+  }
+  .hero-sub {
+    font-size: 1.025rem;
+    color: var(--mid);
+    max-width: 500px;
+    margin: 0 auto 2.25rem;
+    line-height: 1.68;
+    position: relative;
+    font-weight: 400;
+  }
+  .hero-sub strong {
+    color: var(--slate);
+    font-weight: 500;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    padding: .8rem 2rem;
+    border-radius: 8px;
+    font-size: .95rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity .2s, transform .15s;
+    text-decoration: none;
+    position: relative;
+  }
+  .btn-primary:hover { opacity: .87; transform: translateY(-1px); }
+  .hero-trust {
+    margin-top: .9rem;
+    font-size: .78rem;
+    color: #94a3b8;
+    position: relative;
+  }
+  .hero-trust strong {
+    color: var(--mid);
+    font-weight: 500;
+  }
+
+  /* ── SOCIAL PROOF STRIP ── */
+  .sp {
+    background: #fff;
+    border-bottom: 1px solid var(--gray);
+    padding: 2rem 2.5rem;
+    text-align: center;
+  }
+  .sp-label {
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 1.35rem;
+  }
+  .sp-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem .9rem;
+    justify-content: center;
+  }
+  .sp-logo {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #94a3b8;
+    padding: .3rem .8rem;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    transition: color .2s, border-color .2s;
+    cursor: default;
+  }
+  .sp-logo:hover { color: var(--slate); border-color: #cbd5e1; }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 4.5rem 2.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  @media (max-width: 640px) {
+    .section { padding: 3rem 1.25rem; }
+  }
+  .sec-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: .6rem;
+  }
+  h2 {
+    font-size: clamp(1.55rem, 2.3vw, 2rem);
+    font-weight: 600;
+    color: var(--rich);
+    letter-spacing: -.025em;
+    line-height: 1.2;
+    margin-bottom: .75rem;
+  }
+  .sec-sub {
+    font-size: .95rem;
+    color: var(--mid);
+    line-height: 1.67;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  /* ── WHO WE HELP ── */
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+    gap: .65rem;
+  }
+  .who-card {
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    transition: border-color .2s, transform .15s;
+    cursor: default;
+  }
+  .who-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .who-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--cyan);
+    border-radius: 50%;
+    margin-bottom: .55rem;
+  }
+  .who-title {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--rich);
+    margin-bottom: .25rem;
+  }
+  .who-desc {
+    font-size: .78rem;
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  /* ── SERVICES ── */
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .svc-card {
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+    padding: 1.5rem 1.35rem;
+    transition: border-color .2s, transform .15s;
+    cursor: default;
+  }
+  .svc-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .svc-num {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--blue);
+    letter-spacing: .05em;
+    margin-bottom: .85rem;
+    opacity: .7;
+  }
+  .svc-title {
+    font-size: .975rem;
+    font-weight: 600;
+    color: var(--rich);
+    margin-bottom: .4rem;
+  }
+  .svc-desc {
+    font-size: .84rem;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+  .svc-outcome {
+    font-size: .78rem;
+    color: var(--blue);
+    font-weight: 500;
+    margin-top: .65rem;
+  }
+
+  /* ── SOFT CTA ── */
+  .soft-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--gray);
+  }
+  .soft-cta-text {
+    font-size: .9rem;
+    color: var(--mid);
+    margin-bottom: .75rem;
+  }
+  .btn-outline {
+    display: inline-block;
+    background: transparent;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+    padding: .65rem 1.6rem;
+    border-radius: 8px;
+    font-size: .88rem;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .2s, color .2s;
+    text-decoration: none;
+  }
+  .btn-outline:hover { background: var(--blue); color: #fff; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-wrap {
+    background: #fff;
+    border-top: 1px solid var(--gray);
+    border-bottom: 1px solid var(--gray);
+  }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .testi-card {
+    background: var(--white);
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .stars {
+    color: #F59E0B;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: .85rem;
+  }
+  .testi-quote {
+    font-size: .855rem;
+    color: var(--slate);
+    line-height: 1.67;
+    margin-bottom: 1.1rem;
+    font-style: italic;
+  }
+  .testi-name {
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--rich);
+  }
+  .testi-org {
+    font-size: .76rem;
+    color: var(--blue);
+    font-weight: 500;
+    margin-top: .1rem;
+  }
+
+  /* ── ABOUT ── */
+  .about-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+  @media (max-width: 620px) {
+    .about-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  .avatar {
+    width: 52px;
+    height: 52px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+  .about-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--rich);
+    margin-bottom: .2rem;
+  }
+  .about-role {
+    font-size: .82rem;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .about-body {
+    font-size: .9rem;
+    color: var(--mid);
+    line-height: 1.72;
+  }
+  .about-panel {
+    background: var(--rich);
+    border-radius: 14px;
+    padding: 1.85rem 1.65rem;
+  }
+  .panel-label {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 1.2rem;
+  }
+  .panel-item {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,.07);
+  }
+  .panel-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .panel-val {
+    font-size: .95rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: .2rem;
+  }
+  .panel-desc {
+    font-size: .78rem;
+    color: rgba(255,255,255,.42);
+    line-height: 1.5;
+  }
+
+  /* ── COMMUNITY ── */
+  .community-section {
+    background: var(--rich);
+    padding: 4.5rem 2.5rem;
+    text-align: center;
+  }
+  .community-section h2 { color: #fff; }
+  .community-section .sec-sub {
+    color: rgba(255,255,255,.5);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .community-section .sec-label { color: var(--cyan); }
+  .comm-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    justify-content: center;
+    margin-top: 1.65rem;
+  }
+  .comm-tag {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    color: rgba(255,255,255,.62);
+    font-size: .79rem;
+    font-weight: 500;
+    padding: .32rem .9rem;
+    border-radius: 100px;
+  }
+
+  /* ── FINAL CTA ── */
+  .cta-section {
+    padding: 5rem 2.5rem;
+    text-align: center;
+    background: var(--white);
+  }
+  .cta-card {
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .cta-eyebrow {
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: .75rem;
+  }
+  .cta-headline {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--rich);
+    margin-bottom: .6rem;
+    letter-spacing: -.02em;
+    line-height: 1.25;
+  }
+  .cta-sub {
+    font-size: .875rem;
+    color: var(--mid);
+    line-height: 1.65;
+    margin-bottom: 1.75rem;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .btn-full {
+    display: block;
+    width: 100%;
+    padding: .9rem;
+    font-size: .95rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .cta-reassurance {
+    font-size: .75rem;
+    color: #94a3b8;
+    margin-top: .75rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--rich);
+    padding: 1.4rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-size: .9rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+  }
+  .footer-logo span { color: var(--cyan); }
+  .footer-copy {
+    font-size: .76rem;
+    color: rgba(255,255,255,.28);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * { animation: fadeUp .55s ease both; }
+  .hero-badge    { animation-delay: .05s; }
+  .hero h1       { animation-delay: .13s; }
+  .hero-sub      { animation-delay: .22s; }
+  .btn-primary   { animation-delay: .30s; }
+  .hero-trust    { animation-delay: .36s; }
+
+  /* ── SECTION DIVIDERS ── */
+  .bg-white-bordered {
+    background: #fff;
+    border-bottom: 1px solid var(--gray);
+  }
+  .bg-white-plain { background: var(--white); }
+  .bg-offwhite-bordered {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="logo">Miami Tech <span>Media</span></a>
+  <div class="nav-links">
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#community" class="nav-link">Community</a>
+  </div>
+  <!-- Replace href with your Calendly link -->
+  <a href="https://calendar.app.google/AZ6pHRouJfCq5Qh27" target="_blank" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">AI-Powered Creative Studio · Miami, FL</div>
+  <h1>Building the Miami Tech Community Through <em>Media, Marketing & AI</em></h1>
+  <p class="hero-sub">Helping startups, tech companies, and organizations grow through <strong>strategic storytelling, trusted partnerships,</strong> and AI-forward marketing.</p>
+  <!-- Replace href with your Calendly link -->
+  <a href="https://calendar.app.google/AZ6pHRouJfCq5Qh27" target="_blank" class="btn-primary">Schedule a Discovery Call →</a>
+  <p class="hero-trust">Trusted by <strong>Miami Tech Works, Refresh Miami, Google,</strong> and more</p>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div class="sp">
+  <p class="sp-label">Proud to Work With Miami's Leading Tech Organizations</p>
+  <div class="sp-logos">
+    <div class="sp-logo">Miami Tech Works</div>
+    <div class="sp-logo">Refresh Miami</div>
+    <div class="sp-logo">Miami Dade College</div>
+    <div class="sp-logo">Capital One</div>
+    <div class="sp-logo">United Way</div>
+    <div class="sp-logo">Keyfactor</div>
+    <div class="sp-logo">Elevate Capital</div>
+    <div class="sp-logo">Atomic VC</div>
+  </div>
+</div>
+
+<!-- WHO WE HELP -->
+<div class="bg-offwhite-bordered">
+  <div class="section">
+    <p class="sec-label">Is This You?</p>
+    <h2>Built for the Builders</h2>
+    <p class="sec-sub">If you're building something meaningful in tech and need a trusted creative partner to help you show up with clarity and confidence — you're in the right place.</p>
+    <div class="who-grid">
+      <div class="who-card"><div class="who-dot"></div><div class="who-title">Startups</div><div class="who-desc">Need a brand that earns trust fast</div></div>
+      <div class="who-card"><div class="who-dot"></div><div class="who-title">Tech Companies</div><div class="who-desc">Ready to modernize how they look and communicate</div></div>
+      <div class="who-card"><div class="who-dot"></div><div class="who-title">Innovation Orgs</div><div class="who-desc">Doing important work that deserves to be seen</div></div>
+      <div class="who-card"><div class="who-dot"></div><div class="who-title">Community Builders</div><div class="who-desc">Growing a movement, not just a brand</div></div>
+      <div class="who-card"><div class="who-dot"></div><div class="who-title">Growth-Oriented Businesses</div><div class="who-desc">Outgrowing their current online presence</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="services" class="bg-white-bordered">
+  <div class="section">
+    <p class="sec-label">Services</p>
+    <h2>How We Help You Grow</h2>
+    <p class="sec-sub">Strategy-first creative work that helps you communicate clearly, build trust, and generate real opportunities.</p>
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="svc-num">01</div>
+        <div class="svc-title">Brand Strategy</div>
+        <div class="svc-desc">Clarify your positioning, messaging, and identity so the right people immediately understand your value.</div>
+        <div class="svc-outcome">→ Show up with confidence</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">02</div>
+        <div class="svc-title">Websites</div>
+        <div class="svc-desc">Modern, fast websites built to build trust, communicate your story, and turn visitors into conversations.</div>
+        <div class="svc-outcome">→ A site that works for you</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">03</div>
+        <div class="svc-title">Content Systems</div>
+        <div class="svc-desc">AI-assisted workflows that keep your business visible and consistent — without the burnout of doing it all manually.</div>
+        <div class="svc-outcome">→ Stay visible effortlessly</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-num">04</div>
+        <div class="svc-title">Creative Direction</div>
+        <div class="svc-desc">Strategic guidance across your brand, storytelling, and marketing so every decision moves you forward.</div>
+        <div class="svc-outcome">→ A clear path forward</div>
+      </div>
+    </div>
+    <div class="soft-cta">
+      <p class="soft-cta-text">Not sure which service fits your situation? Let's figure it out together.</p>
+      <!-- Replace href with your Calendly link -->
+      <a href="https://calendar.app.google/AZ6pHRouJfCq5Qh27" target="_blank" class="btn-outline">Schedule a Free Discovery Call →</a>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials-wrap">
+  <div class="section">
+    <p class="sec-label">Real Words From Real Partners</p>
+    <h2>Trusted by the Miami Tech Community</h2>
+    <p class="sec-sub">Jorge has worked with founders, organizations, and teams across the Miami tech ecosystem for years.</p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"Jorge is amazing! I've hired him for multiple events and he always delivers the results I need. Extremely punctual, organized, and reliable — always great to work with."</p>
+        <div class="testi-name">Anna Karagina</div>
+        <div class="testi-org">Atomic VC</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"Professional, friendly, attentive, and they always produce high-quality work. We have worked with Jorge and his team for many years!"</p>
+        <div class="testi-name">Nicole Vasquez</div>
+        <div class="testi-org">Refresh Miami</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"This has been the best headshot and event photography experience I've had. High professionalism and cordiality throughout. A very satisfying and quality encounter."</p>
+        <div class="testi-name">Abirami Sukumaran</div>
+        <div class="testi-org">Google</div>
+      </div>
+    </div>
+    <!-- CTA at highest trust moment -->
+    <div class="soft-cta">
+      <p class="soft-cta-text">Ready to work with someone your peers already trust?</p>
+      <!-- Replace href with your Calendly link -->
+      <a href="https://calendar.app.google/AZ6pHRouJfCq5Qh27" target="_blank" class="btn-primary">Schedule a Discovery Call →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="bg-offwhite-bordered">
+  <div class="section">
+    <p class="sec-label">About</p>
+    <div class="about-wrap">
+      <div>
+        <div class="avatar">JC</div>
+        <div class="about-name">Jorge Castillo</div>
+        <div class="about-role">Founder & Creative Director</div>
+        <p class="about-body">Hi, I'm Jorge. I help startups, organizations, and growing businesses modernize their online presence through branding, websites, content, and AI-powered creative direction.<br><br>My goal is simple: help you communicate clearly, build trust with the right people, and tell your story in a way that actually moves your business forward.</p>
+      </div>
+      <div class="about-panel">
+        <p class="panel-label">What Working With Me Feels Like</p>
+        <div class="panel-item">
+          <div class="panel-val">Clarity from day one</div>
+          <div class="panel-desc">You'll know exactly what we're building, why, and what success looks like</div>
+        </div>
+        <div class="panel-item">
+          <div class="panel-val">A real creative partner</div>
+          <div class="panel-desc">Not a vendor — someone genuinely invested in your outcomes</div>
+        </div>
+        <div class="panel-item">
+          <div class="panel-val">Fast without cutting corners</div>
+          <div class="panel-desc">AI lets us move quickly while keeping quality high</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMUNITY VISION -->
+<div id="community" class="community-section">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <p class="sec-label">Community Vision</p>
+    <h2>We're Here to Help Miami Tech Grow</h2>
+    <p class="sec-sub">Miami Tech Media isn't just a studio — it's a commitment to the people, organizations, and ideas building the future of tech in South Florida.</p>
+    <div class="comm-tags">
+      <span class="comm-tag">Miami Tech Works</span>
+      <span class="comm-tag">Refresh Miami</span>
+      <span class="comm-tag">Miami Dade College</span>
+      <span class="comm-tag">Elevate Capital</span>
+      <span class="comm-tag">Atomic VC</span>
+      <span class="comm-tag">Keyfactor</span>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="cta-section">
+  <div class="cta-card">
+    <p class="cta-eyebrow">Let's Work Together</p>
+    <p class="cta-headline">Your Business Deserves to Be Seen Clearly.</p>
+    <p class="cta-sub">Let's have a real conversation about where you are, where you want to go, and how we can get there together.</p>
+    <!-- Replace href with your Calendly link -->
+    <a href="https://calendar.app.google/AZ6pHRouJfCq5Qh27" target="_blank" class="btn-primary btn-full">Schedule a Discovery Call →</a>
+    <p class="cta-reassurance">Free discovery call · No commitment · No pressure</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Miami Tech <span>Media</span></a>
+  <p class="footer-copy">© 2026 Miami Tech Media · Miami, FL</p>
+</footer>
+
+</body>
+</html>

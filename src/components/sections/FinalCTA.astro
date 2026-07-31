@@ -1,0 +1,112 @@
+---
+import { primaryCta } from '../../data/nav';
+---
+<section class="final-cta">
+  <div class="cta-card">
+    <div class="cta-text">
+      <p class="eyebrow">Let's Build Something Clearer</p>
+      <h2>Ready for a website and brand that actually support your growth?</h2>
+      <p class="cta-copy">
+        Start with a focused conversation about where you are, what is
+        getting in the way, and what would make the biggest difference.
+      </p>
+    </div>
+
+    <a href={primaryCta.href} target="_blank" rel="noopener" class="cta-button">
+      Schedule a Discovery Call
+    </a>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    padding: 5rem 3rem;
+    background: var(--white);
+  }
+
+  .cta-card {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--rich);
+    border-radius: 28px;
+    padding: 4rem 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .cta-text {
+    max-width: 640px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--cyan);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    margin: 0 0 1.25rem;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+  }
+
+  .cta-copy {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .cta-button {
+    flex-shrink: 0;
+    display: inline-block;
+    background: #fff;
+    color: var(--rich);
+    padding: 1rem 2.1rem;
+    border-radius: 8px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+  }
+
+  .cta-button:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 860px) {
+    .final-cta {
+      padding: 3.5rem 1.5rem;
+    }
+
+    .cta-card {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 2.75rem 2rem;
+      gap: 2rem;
+      border-radius: 22px;
+    }
+
+    .cta-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
