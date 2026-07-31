@@ -1,0 +1,127 @@
+---
+import { partners } from '../../data/partners';
+---
+<section class="trusted-by" id="trusted-by">
+  <div class="trusted-inner">
+    <div class="trusted-header">
+      <p class="eyebrow">Trusted By</p>
+      <h2>Trusted by organizations building the future of technology and innovation.</h2>
+      <p class="lede">
+        We're proud to partner with organizations that strengthen technology,
+        workforce development, entrepreneurship, education, and community
+        throughout Florida.
+      </p>
+    </div>
+
+    <ul class="partner-grid">
+      {partners.map((name) => (
+        <li class="partner-name">{name}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .trusted-by {
+    padding: 6.5rem 3rem;
+    background: var(--white);
+    border-top: 1px solid var(--gray);
+  }
+
+  .trusted-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .trusted-header {
+    max-width: 640px;
+    margin: 0 auto 4.5rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(37, 99, 235, 0.07);
+    border: 1px solid rgba(37, 99, 235, 0.14);
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    margin: 0 0 1.25rem;
+  }
+
+  h2 {
+    font-size: clamp(1.7rem, 2.7vw, 2.25rem);
+    font-weight: 600;
+    color: var(--rich);
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin: 0 0 1.1rem;
+  }
+
+  .lede {
+    font-size: 1rem;
+    color: var(--mid);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .partner-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--gray);
+    border: 1px solid var(--gray);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .partner-name {
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--slate);
+    min-height: 120px;
+  }
+
+  @media (max-width: 1024px) {
+    .partner-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .trusted-by {
+      padding: 4rem 1.5rem;
+    }
+
+    .trusted-header {
+      margin-bottom: 3rem;
+    }
+
+    .partner-grid {
+      grid-template-columns: repeat(2, 1fr);
+      border-radius: 14px;
+    }
+
+    .partner-name {
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+      min-height: 100px;
+    }
+  }
+</style>
