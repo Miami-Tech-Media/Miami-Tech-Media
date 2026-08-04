@@ -1,7 +1,7 @@
 ---
 import { logoText, navLinks, primaryCta } from '../../data/nav';
 ---
-<header class="site-header">
+<header class="site-header" id="site-header">
   <a href="/" class="logo">
     {logoText.main} <span>{logoText.accent}</span>
   </a>
@@ -45,8 +45,22 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
 </header>
 
 <script>
+  const header = document.getElementById('site-header');
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
+
+  if (header) {
+    const setScrolledState = () => {
+      if (window.scrollY > 24) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    };
+
+    setScrolledState();
+    window.addEventListener('scroll', setScrolledState, { passive: true });
+  }
 
   if (toggle && menu) {
     const closeMenu = () => {
@@ -87,13 +101,21 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.25rem 3rem;
-    background: var(--rich);
-    position: sticky;
+    padding: 1.5rem 3rem;
+    background: transparent;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid transparent;
     flex-wrap: wrap;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .site-header.is-scrolled {
+    background: var(--rich);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .logo {
@@ -105,7 +127,7 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
   }
 
   .logo span {
-    color: var(--cyan);
+    color: #fff;
   }
 
   .nav-links {
@@ -191,9 +213,11 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
     width: 100%;
     flex-direction: column;
     gap: 0.25rem;
-    padding-top: 1rem;
+    padding: 1rem 0.25rem 0.5rem;
     margin-top: 1rem;
+    background: var(--rich);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0 0 12px 12px;
   }
 
   .mobile-menu[hidden] {
@@ -217,7 +241,7 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
 
   @media (max-width: 860px) {
     .site-header {
-      padding: 1rem 1.5rem;
+      padding: 1.15rem 1.5rem;
     }
 
     .nav-links {
