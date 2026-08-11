@@ -1,9 +1,11 @@
 ---
-import { logoText, navLinks, primaryCta } from '../../data/nav';
+import { logoLines, navLinks, primaryCta } from '../../data/nav';
 ---
 <header class="site-header" id="site-header">
-  <a href="/" class="logo">
-    {logoText.main} <span>{logoText.accent}</span>
+  <a href="/" class="logo" aria-label="Miami Tech Media home">
+    {logoLines.map((line) => (
+      <span class="logo-line">{line}</span>
+    ))}
   </a>
 
   <nav class="nav-links" aria-label="Primary">
@@ -14,6 +16,12 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
 
   <div class="header-actions">
     <a href={primaryCta.href} target="_blank" rel="noopener" class="nav-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="cta-icon">
+        <rect x="3.5" y="4.5" width="17" height="16" rx="2"/>
+        <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/>
+        <line x1="7.5" y1="2.5" x2="7.5" y2="6.5"/>
+        <line x1="16.5" y1="2.5" x2="16.5" y2="6.5"/>
+      </svg>
       {primaryCta.label}
     </a>
 
@@ -41,26 +49,15 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
     {navLinks.map((link) => (
       <a href={link.href} class="mobile-link">{link.label}</a>
     ))}
+    <a href={primaryCta.href} target="_blank" rel="noopener" class="mobile-cta">
+      {primaryCta.label}
+    </a>
   </nav>
 </header>
 
 <script>
-  const header = document.getElementById('site-header');
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
-
-  if (header) {
-    const setScrolledState = () => {
-      if (window.scrollY > 24) {
-        header.classList.add('is-scrolled');
-      } else {
-        header.classList.remove('is-scrolled');
-      }
-    };
-
-    setScrolledState();
-    window.addEventListener('scroll', setScrolledState, { passive: true });
-  }
 
   if (toggle && menu) {
     const closeMenu = () => {
@@ -101,87 +98,103 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 3rem;
-    background: transparent;
-    position: fixed;
+    gap: 2rem;
+    padding: 0 3rem;
+    height: 68px;
+    background: var(--white);
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 100;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid var(--gray);
     flex-wrap: wrap;
-    transition: background 0.25s ease, border-color 0.25s ease;
-  }
-
-  .site-header.is-scrolled {
-    background: var(--rich);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .logo {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: -0.01em;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
     text-decoration: none;
+    flex-shrink: 0;
   }
 
-  .logo span {
-    color: #fff;
+  .logo-line {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rich);
   }
 
   .nav-links {
     display: flex;
-    gap: 2.25rem;
     align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex: 1;
   }
 
   .nav-link {
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.55);
     font-weight: 500;
+    color: var(--slate);
     text-decoration: none;
     transition: color 0.2s ease;
   }
 
+  .nav-link:first-child {
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 0.2rem;
+  }
+
   .nav-link:hover,
   .nav-link:focus-visible {
-    color: #fff;
+    color: var(--blue);
   }
 
   .header-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
   }
 
   .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     background: var(--blue);
     color: #fff;
-    padding: 0.6rem 1.4rem;
-    border-radius: 8px;
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
     transition: opacity 0.2s ease;
   }
 
+  .cta-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
   .nav-cta:hover {
-    opacity: 0.87;
+    opacity: 0.88;
   }
 
   .menu-toggle {
     display: none;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 8px;
-    color: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    color: var(--rich);
     cursor: pointer;
   }
 
@@ -202,22 +215,13 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
     display: block;
   }
 
-  a:focus-visible,
-  button:focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 2px;
-  }
-
   .mobile-menu {
     display: none;
     width: 100%;
     flex-direction: column;
     gap: 0.25rem;
-    padding: 1rem 0.25rem 0.5rem;
-    margin-top: 1rem;
-    background: var(--rich);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0 0 12px 12px;
+    padding: 1rem 0 1.25rem;
+    border-top: 1px solid var(--gray);
   }
 
   .mobile-menu[hidden] {
@@ -226,25 +230,47 @@ import { logoText, navLinks, primaryCta } from '../../data/nav';
 
   .mobile-link {
     padding: 0.75rem 0.25rem;
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--slate);
     text-decoration: none;
     border-radius: 6px;
   }
 
   .mobile-link:hover,
   .mobile-link:focus-visible {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--blue);
+    background: var(--light);
   }
 
-  @media (max-width: 860px) {
+  .mobile-cta {
+    margin-top: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--blue);
+    color: #fff;
+    padding: 0.85rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
     .site-header {
-      padding: 1.15rem 1.5rem;
+      padding: 0 1.5rem;
+      height: auto;
+      min-height: 64px;
+      padding-top: 0.85rem;
+      padding-bottom: 0.85rem;
     }
 
     .nav-links {
+      display: none;
+    }
+
+    .nav-cta {
       display: none;
     }
 

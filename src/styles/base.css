@@ -21,3 +21,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Global focus visibility for all interactive elements. Astro scopes
+   component styles by default, so a rule defined inside one component
+   (e.g. Header) does not reach links/buttons in other components -
+   this global rule ensures consistent, visible keyboard focus
+   everywhere on the site. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Respect the user's reduced-motion preference site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

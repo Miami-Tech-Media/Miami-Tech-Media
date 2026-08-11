@@ -1,6 +1,8 @@
 ---
 import '../styles/tokens.css';
 import '../styles/base.css';
+import GtmHead from '../components/analytics/GtmHead.astro';
+import ConsentBanner from '../components/consent/ConsentBanner.astro';
 
 interface Props {
   title?: string;
@@ -8,25 +10,50 @@ interface Props {
 }
 
 const {
-  title = 'Miami Tech Media | Strategy, Websites, Content & AI',
-  description = 'Miami Tech Media helps technology companies, innovation organizations, and community builders communicate clearly through branding, websites, content, and AI-assisted workflows.',
+  title = 'Miami Tech Media | Branding, Web Design & Content',
+  description = 'Miami Tech Media helps technology companies and organizations build stronger brands, websites, and content through strategy, creative direction, and AI-assisted workflows.',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Organization structured data — only fields explicitly supplied and
+// approved are included. Do not add address, phone, founding date,
+// employee count, ratings, or social profile URLs until real values
+// are provided and approved.
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Miami Tech Media',
+  url: 'https://miamitech.media/',
+};
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <GtmHead />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
+    <!--
+      og:image / twitter:image intentionally omitted: no final approved
+      social-sharing image has been supplied yet. Add both tags here,
+      pointing at a real self-hosted asset (recommended 1200x630),
+      once one is approved. Flagged as pending in the Phase 3 report.
+    -->
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationJsonLd)} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,5 +64,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <slot />
+    <ConsentBanner />
   </body>
 </html>

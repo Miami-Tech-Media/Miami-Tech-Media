@@ -1,9 +1,10 @@
+// Approved partner list. Capital One was intentionally removed per
+// explicit direction and should not be restored.
 export const partners: string[] = [
-  'Refresh Miami',
   'Miami Tech Works',
+  'Refresh Miami',
   'Miami Dade College',
-  'Capital One',
   'United Way',
-  'Keyfactor',
   'Elevate Capital',
+  'Keyfactor',
 ];

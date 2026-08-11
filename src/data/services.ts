@@ -1,37 +1,32 @@
 export interface Service {
   number: string;
   title: string;
-  label: string;
   description: string;
 }
 
 export const services: Service[] = [
   {
     number: '01',
-    title: 'Brand Strategy & Messaging',
-    label: 'Positioning, messaging, and visual direction',
+    title: 'Brand Strategy',
     description:
-      'Clarify what makes your organization valuable so the right people understand, trust, and remember you.',
+      'Clear positioning, messaging, and visual direction that builds trust.',
   },
   {
     number: '02',
-    title: 'Website Strategy & Design',
-    label: 'Structure, user experience, conversion, and implementation',
+    title: 'Websites',
     description:
-      'Turn your website into a trustworthy, focused experience that helps visitors quickly understand what you do and what to do next.',
+      'Modern, high-performing websites designed to generate leads and communicate clearly.',
   },
   {
     number: '03',
-    title: 'Content & Storytelling',
-    label: 'Photography, video, campaigns, and editorial content',
+    title: 'Content Systems',
     description:
-      'Create useful, credible stories that strengthen relationships and extend the life of every initiative.',
+      'Strategic content systems that make consistent marketing easier to maintain.',
   },
   {
     number: '04',
-    title: 'AI-Assisted Creative Systems',
-    label: 'Workflows, templates, automation, and guidance',
+    title: 'Creative Direction',
     description:
-      'Build leaner creative systems that save time, improve consistency, and help your organization create better content.',
+      'Ongoing creative leadership across brand, content, campaigns, and digital experiences.',
   },
 ];

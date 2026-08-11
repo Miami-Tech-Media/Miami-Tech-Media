@@ -1,26 +1,40 @@
 ---
 import { services } from '../../data/services';
 ---
-<section class="services" id="services">
+<section class="services" id="services" aria-labelledby="services-heading">
   <div class="services-inner">
-    <div class="services-header">
-      <p class="eyebrow">How We Help</p>
-      <h2>A clearer brand. A stronger digital presence. A smarter way to create.</h2>
-      <p class="lede">
-        Miami Tech Media brings strategy, creative direction, and AI-assisted
-        execution together in one lean partnership.
+    <div class="services-intro">
+      <p class="eyebrow">Services</p>
+      <h2 id="services-heading">
+        Strategic creative services built around clarity, trust, and growth<span class="accent-dot">.</span>
+      </h2>
+      <div class="divider-accent"></div>
+      <p class="intro-text">
+        From brand strategy to content systems, we help you communicate with clarity,
+        consistency, and impact.
       </p>
+      <a href="#final-cta" class="explore-link">
+        Explore Our Services
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="link-arrow">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </a>
     </div>
 
     <ul class="service-list">
       {services.map((service) => (
         <li class="service-row">
-          <span class="service-number">{service.number}</span>
-          <div class="service-copy">
+          <span class="service-number" aria-hidden="true">{service.number}</span>
+          <span class="row-divider" aria-hidden="true"></span>
+          <div class="service-content">
             <h3>{service.title}</h3>
-            <p class="service-label">{service.label}</p>
-            <p class="service-description">{service.description}</p>
+            <p>{service.description}</p>
           </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="row-arrow">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
         </li>
       ))}
     </ul>
@@ -29,50 +43,78 @@ import { services } from '../../data/services';
 
 <style>
   .services {
-    padding: 6.5rem 3rem;
     background: var(--white);
   }
 
   .services-inner {
-    max-width: 1000px;
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 3.5rem 3rem 5rem;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 6rem;
   }
 
-  .services-header {
-    max-width: 640px;
-    margin-bottom: 4.5rem;
+  .services-intro {
+    align-self: start;
+    position: sticky;
+    top: 7rem;
   }
 
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(37, 99, 235, 0.07);
-    border: 1px solid rgba(37, 99, 235, 0.14);
     color: var(--blue);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 0.35rem 0.9rem;
-    border-radius: 100px;
     margin: 0 0 1.25rem;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 3vw, 2.5rem);
-    font-weight: 600;
+    font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+    font-weight: 700;
     color: var(--rich);
-    letter-spacing: -0.025em;
-    line-height: 1.2;
-    margin: 0 0 1.1rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem;
   }
 
-  .lede {
-    font-size: 1.02rem;
+  .accent-dot {
+    color: var(--blue);
+  }
+
+  .divider-accent {
+    width: 32px;
+    height: 2px;
+    background: var(--blue);
+    margin: 0 0 1.75rem;
+  }
+
+  .intro-text {
+    font-size: 0.9rem;
     color: var(--mid);
-    line-height: 1.7;
-    margin: 0;
+    line-height: 1.6;
+    margin: 0 0 2rem;
+  }
+
+  .explore-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--blue);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .link-arrow {
+    width: 15px;
+    height: 15px;
+    transition: transform 0.2s ease;
+  }
+
+  .explore-link:hover .link-arrow {
+    transform: translateX(2px);
   }
 
   .service-list {
@@ -83,61 +125,71 @@ import { services } from '../../data/services';
   }
 
   .service-row {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 2.5rem;
-    padding: 2.75rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.75rem;
+    padding: 2.25rem 0;
     border-bottom: 1px solid var(--gray);
   }
 
   .service-number {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 2.25rem;
+    font-weight: 700;
     color: var(--blue);
-    letter-spacing: 0.02em;
-    padding-top: 0.3rem;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 52px;
   }
 
-  .service-copy h3 {
-    font-size: 1.35rem;
-    font-weight: 600;
+  .row-divider {
+    width: 1px;
+    align-self: stretch;
+    background: var(--gray);
+    flex-shrink: 0;
+  }
+
+  .service-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .service-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
     color: var(--rich);
     letter-spacing: -0.01em;
     margin: 0 0 0.5rem;
   }
 
-  .service-label {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--blue);
-    margin: 0 0 0.9rem;
-  }
-
-  .service-description {
-    font-size: 0.98rem;
+  .service-content p {
+    font-size: 0.9rem;
     color: var(--mid);
-    line-height: 1.7;
-    max-width: 560px;
+    line-height: 1.6;
     margin: 0;
   }
 
-  @media (max-width: 700px) {
-    .services {
-      padding: 4rem 1.5rem;
-    }
+  .row-arrow {
+    width: 18px;
+    height: 18px;
+    color: var(--gray);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    transition: color 0.2s ease;
+  }
 
-    .services-header {
-      margin-bottom: 3rem;
-    }
+  .service-row:hover .row-arrow {
+    color: var(--blue);
+  }
 
-    .service-row {
+  @media (max-width: 900px) {
+    .services-inner {
       grid-template-columns: 1fr;
-      gap: 0.85rem;
-      padding: 2rem 0;
+      gap: 2.5rem;
+      padding: 3rem 1.5rem 3.5rem;
     }
 
-    .service-number {
-      padding-top: 0;
+    .services-intro {
+      position: static;
     }
   }
 </style>

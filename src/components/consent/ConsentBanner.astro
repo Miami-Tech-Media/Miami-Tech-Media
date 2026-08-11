@@ -1,0 +1,419 @@
+---
+import { CONSENT_STORAGE_KEY } from '../../data/analytics';
+---
+<div id="consent-banner" class="consent-banner" role="region" aria-label="Cookie consent" hidden>
+  <div class="consent-inner">
+    <div class="consent-view" id="consent-main-view">
+      <div class="consent-text">
+        <p class="consent-heading">Your privacy matters</p>
+        <p class="consent-body">
+          We use cookies and similar technologies to understand how our website is
+          used and improve our marketing.
+        </p>
+      </div>
+
+      <div class="consent-actions">
+        <button type="button" class="btn-text" id="consent-preferences-btn" aria-expanded="false" aria-controls="consent-preferences-panel">
+          Preferences
+        </button>
+        <button type="button" class="btn-outline" id="consent-reject-btn">
+          Reject
+        </button>
+        <button type="button" class="btn-solid" id="consent-accept-btn">
+          Accept
+        </button>
+      </div>
+    </div>
+
+    <div class="consent-view" id="consent-preferences-panel" hidden>
+      <p class="prefs-heading">Cookie preferences</p>
+
+      <div class="pref-row">
+        <div class="pref-label">
+          <p class="pref-title">Necessary</p>
+          <p class="pref-desc">Required for the website to function. Always on.</p>
+        </div>
+        <span class="pref-static">Always on</span>
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-label">
+          <label for="consent-analytics-toggle" class="pref-title">Analytics</label>
+          <p class="pref-desc">Helps us understand how visitors use the site.</p>
+        </div>
+        <input type="checkbox" id="consent-analytics-toggle" class="pref-toggle" />
+      </div>
+
+      <div class="pref-row">
+        <div class="pref-label">
+          <label for="consent-marketing-toggle" class="pref-title">Marketing / Advertising</label>
+          <p class="pref-desc">Used to measure and improve our marketing.</p>
+        </div>
+        <input type="checkbox" id="consent-marketing-toggle" class="pref-toggle" />
+      </div>
+
+      <div class="consent-actions">
+        <button type="button" class="btn-text" id="consent-pref-back-btn">
+          Back
+        </button>
+        <button type="button" class="btn-solid" id="consent-pref-save-btn">
+          Save Preferences
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ CONSENT_STORAGE_KEY }}>
+  (function () {
+    var banner = document.getElementById('consent-banner');
+    var mainView = document.getElementById('consent-main-view');
+    var prefsPanel = document.getElementById('consent-preferences-panel');
+    var prefsBtn = document.getElementById('consent-preferences-btn');
+    var backBtn = document.getElementById('consent-pref-back-btn');
+    var acceptBtn = document.getElementById('consent-accept-btn');
+    var rejectBtn = document.getElementById('consent-reject-btn');
+    var saveBtn = document.getElementById('consent-pref-save-btn');
+    var analyticsToggle = document.getElementById('consent-analytics-toggle');
+    var marketingToggle = document.getElementById('consent-marketing-toggle');
+
+    function save(prefs) {
+      prefs.timestamp = Date.now();
+      try {
+        localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(prefs));
+      } catch (e) {
+        // localStorage unavailable (e.g. private browsing) - consent
+        // still applies to dataLayer for this page view via
+        // applyAndMaybeLoad below, it just won't persist across visits.
+      }
+    }
+
+    function applyAndMaybeLoad(prefs) {
+      var mapped = {
+        analytics_storage: prefs.analytics === 'granted' ? 'granted' : 'denied',
+        ad_storage: prefs.marketing === 'granted' ? 'granted' : 'denied',
+        ad_user_data: prefs.marketing === 'granted' ? 'granted' : 'denied',
+        ad_personalization: prefs.marketing === 'granted' ? 'granted' : 'denied',
+      };
+      // Always push the current state - this is local-only and correct
+      // even if GTM is already loaded (e.g. the visitor is revising an
+      // earlier grant to a rejection via Cookie Preferences).
+      if (typeof window.__mtmApplyConsent === 'function') {
+        window.__mtmApplyConsent(mapped);
+      }
+      // Only request the GTM script if this choice grants something.
+      // Rejecting everything never loads it.
+      if (prefs.analytics === 'granted' || prefs.marketing === 'granted') {
+        if (typeof window.__mtmEnsureGtmLoaded === 'function') {
+          window.__mtmEnsureGtmLoaded();
+        }
+      }
+    }
+
+    function hideBanner() {
+      banner.hidden = true;
+    }
+
+    function showMainView() {
+      mainView.hidden = false;
+      prefsPanel.hidden = true;
+      prefsBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    function showPrefsView() {
+      mainView.hidden = true;
+      prefsPanel.hidden = false;
+      prefsBtn.setAttribute('aria-expanded', 'true');
+      analyticsToggle.focus();
+    }
+
+    function syncTogglesToStored(prefs) {
+      analyticsToggle.checked = !!prefs && prefs.analytics === 'granted';
+      marketingToggle.checked = !!prefs && prefs.marketing === 'granted';
+    }
+
+    // GtmHead's script runs before this one and defines
+    // __mtmGetValidConsent (handles the 6-month expiration check).
+    var existing = typeof window.__mtmGetValidConsent === 'function'
+      ? window.__mtmGetValidConsent()
+      : null;
+
+    if (existing) {
+      // Valid, unexpired choice from a previous visit - GtmHead has
+      // already applied and, if warranted, loaded GTM. Just reflect
+      // the saved state in the (hidden) toggles and keep the banner
+      // hidden.
+      syncTogglesToStored(existing);
+    } else {
+      // First visit, or a previous choice that has expired (cleared by
+      // __mtmGetValidConsent above) - ask again.
+      banner.hidden = false;
+    }
+
+    prefsBtn.addEventListener('click', showPrefsView);
+    backBtn.addEventListener('click', showMainView);
+
+    banner.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !prefsPanel.hidden) {
+        showMainView();
+        prefsBtn.focus();
+      }
+    });
+
+    acceptBtn.addEventListener('click', function () {
+      var prefs = { analytics: 'granted', marketing: 'granted' };
+      save(prefs);
+      applyAndMaybeLoad(prefs);
+      hideBanner();
+    });
+
+    rejectBtn.addEventListener('click', function () {
+      var prefs = { analytics: 'denied', marketing: 'denied' };
+      save(prefs);
+      applyAndMaybeLoad(prefs);
+      hideBanner();
+    });
+
+    saveBtn.addEventListener('click', function () {
+      var prefs = {
+        analytics: analyticsToggle.checked ? 'granted' : 'denied',
+        marketing: marketingToggle.checked ? 'granted' : 'denied',
+      };
+      save(prefs);
+      applyAndMaybeLoad(prefs);
+      hideBanner();
+    });
+
+    // Exposed for the footer's "Cookie Preferences" link, so a visitor
+    // can reopen this interface at any time to change or revoke their
+    // choice, regardless of whether the main banner is currently
+    // hidden.
+    window.__mtmOpenConsentPreferences = function () {
+      var current = typeof window.__mtmGetValidConsent === 'function'
+        ? window.__mtmGetValidConsent()
+        : null;
+      syncTogglesToStored(current);
+      banner.hidden = false;
+      showPrefsView();
+    };
+  })();
+</script>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    background: var(--white);
+    border-top: 1px solid var(--gray);
+    box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.08);
+  }
+
+  .consent-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+  }
+
+  .consent-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .consent-view[hidden] {
+    display: none;
+  }
+
+  #consent-main-view {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .consent-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .consent-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin: 0 0 0.4rem;
+  }
+
+  .consent-body {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .consent-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .btn-solid,
+  .btn-outline,
+  .btn-text {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-solid {
+    background: var(--blue);
+    color: #fff;
+    border: 1px solid var(--blue);
+    padding: 0.65rem 1.35rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-solid:hover {
+    opacity: 0.9;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--rich);
+    border: 1px solid var(--gray);
+    padding: 0.65rem 1.35rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .btn-text {
+    background: none;
+    border: none;
+    color: var(--slate);
+    padding: 0.65rem 0.25rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .btn-text:hover {
+    color: var(--blue);
+  }
+
+  .prefs-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin: 0;
+  }
+
+  .pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  .pref-row:last-of-type {
+    border-bottom: none;
+  }
+
+  .pref-label {
+    min-width: 0;
+  }
+
+  .pref-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--rich);
+    margin: 0 0 0.2rem;
+  }
+
+  .pref-desc {
+    font-size: 0.8rem;
+    color: var(--mid);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .pref-static {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--mid);
+    flex-shrink: 0;
+  }
+
+  .pref-toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 42px;
+    height: 24px;
+    border-radius: 100px;
+    background: var(--gray);
+    border: none;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .pref-toggle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s ease;
+  }
+
+  .pref-toggle:checked {
+    background: var(--blue);
+  }
+
+  .pref-toggle:checked::before {
+    transform: translateX(18px);
+  }
+
+  @media (max-width: 700px) {
+    .consent-inner {
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+
+    #consent-main-view {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+
+    .consent-actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .btn-solid,
+    .btn-outline {
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-text {
+      align-self: center;
+    }
+  }
+</style>

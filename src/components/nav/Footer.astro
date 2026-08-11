@@ -1,101 +1,161 @@
 ---
-import { logoText, navLinks } from '../../data/nav';
-import { socialLinks, legalLinks, footerTagline, copyrightText } from '../../data/social';
+import { logoLines, navLinks } from '../../data/nav';
+import { socialLinks, legalLinks, footerTagline, servingText, copyrightText } from '../../data/social';
 ---
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="/" class="logo">
-        {logoText.main} <span>{logoText.accent}</span>
+      <a href="/" class="logo" aria-label="Miami Tech Media home">
+        {logoLines.map((line) => (
+          <span class="logo-line">{line}</span>
+        ))}
       </a>
       <p class="tagline">{footerTagline}</p>
+      <div class="social-icons">
+        {socialLinks.map((social) => (
+          <a href={social.href} aria-label={social.label} class="social-icon">
+            {social.label === 'LinkedIn' ? (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            )}
+          </a>
+        ))}
+      </div>
     </div>
 
-    <nav class="footer-nav" aria-label="Footer">
-      <p class="footer-heading">Navigation</p>
+    <nav class="footer-col" aria-label="Footer">
+      <p class="footer-heading">Menu</p>
       {navLinks.map((link) => (
         <a href={link.href} class="footer-link">{link.label}</a>
       ))}
     </nav>
 
-    <div class="footer-social">
-      <p class="footer-heading">Connect</p>
-      {socialLinks.map((social) => (
-        <a href={social.href} class="footer-link">{social.label}</a>
+    <div class="footer-col">
+      <p class="footer-heading">Serving</p>
+      <p class="serving-text">{servingText}</p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-heading">Legal</p>
+      {legalLinks.map((legal) => (
+        <a href={legal.href} class="footer-link">{legal.label}</a>
       ))}
+      <button type="button" class="footer-link footer-link-button" id="footer-cookie-prefs-btn">
+        Cookie Preferences
+      </button>
     </div>
   </div>
 
   <div class="footer-bottom">
     <p class="copyright">{copyrightText}</p>
-    <div class="legal-links">
-      {legalLinks.map((legal) => (
-        <a href={legal.href} class="legal-link">{legal.label}</a>
-      ))}
-    </div>
   </div>
 </footer>
+
+<script>
+  var cookiePrefsBtn = document.getElementById('footer-cookie-prefs-btn');
+  if (cookiePrefsBtn) {
+    cookiePrefsBtn.addEventListener('click', function () {
+      if (typeof window.__mtmOpenConsentPreferences === 'function') {
+        window.__mtmOpenConsentPreferences();
+      }
+    });
+  }
+</script>
 
 <style>
   .site-footer {
     background: var(--white);
     border-top: 1px solid var(--gray);
-    padding: 4rem 3rem 2.5rem;
   }
 
   .footer-inner {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
+    padding: 4rem 3rem 3.5rem;
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 3rem;
-    padding-bottom: 3rem;
-  }
-
-  .footer-brand {
-    max-width: 340px;
   }
 
   .logo {
-    display: inline-block;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--rich);
-    letter-spacing: -0.01em;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
     text-decoration: none;
-    margin-bottom: 0.9rem;
+    margin-bottom: 1.25rem;
   }
 
-  .logo span {
+  .logo-line {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--rich);
   }
 
   .tagline {
     font-size: 0.9rem;
     color: var(--mid);
-    line-height: 1.65;
-    margin: 0;
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+    max-width: 320px;
+  }
+
+  .social-icons {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .social-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    color: var(--mid);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .social-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .social-icon:hover {
+    color: var(--blue);
+    border-color: var(--blue);
   }
 
   .footer-heading {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #94a3b8;
-    margin: 0 0 1rem;
+    color: var(--rich);
+    margin: 0 0 1.25rem;
   }
 
-  .footer-nav,
-  .footer-social {
+  .footer-col {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.75rem;
   }
 
   .footer-link {
     font-size: 0.9rem;
-    color: var(--slate);
+    color: var(--mid);
     text-decoration: none;
     width: fit-content;
   }
@@ -104,58 +164,47 @@ import { socialLinks, legalLinks, footerTagline, copyrightText } from '../../dat
     color: var(--blue);
   }
 
-  .footer-bottom {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 2rem;
-    border-top: 1px solid var(--gray);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
+  .footer-link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
   }
 
-  .copyright {
-    font-size: 0.82rem;
-    color: #94a3b8;
+  .serving-text {
+    font-size: 0.9rem;
+    color: var(--mid);
+    line-height: 1.6;
     margin: 0;
   }
 
-  .legal-links {
-    display: flex;
-    gap: 1.5rem;
+  .footer-bottom {
+    border-top: 1px solid var(--gray);
+    padding: 2rem 3rem;
   }
 
-  .legal-link {
-    font-size: 0.82rem;
-    color: #94a3b8;
-    text-decoration: none;
-  }
-
-  .legal-link:hover {
-    color: var(--blue);
+  .copyright {
+    font-size: 0.78rem;
+    color: var(--mid);
+    text-align: center;
+    margin: 0;
   }
 
   @media (max-width: 760px) {
-    .site-footer {
-      padding: 3rem 1.5rem 2rem;
-    }
-
     .footer-inner {
-      grid-template-columns: 1fr;
-      gap: 2.25rem;
-      padding-bottom: 2.25rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      padding: 3rem 1.5rem 2.5rem;
     }
 
     .footer-brand {
-      max-width: none;
+      grid-column: 1 / -1;
     }
 
     .footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.85rem;
+      padding: 1.5rem 1.5rem;
     }
   }
 </style>

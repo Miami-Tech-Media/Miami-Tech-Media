@@ -1,0 +1,113 @@
+---
+import { GTM_CONTAINER_ID, CONSENT_STORAGE_KEY } from '../../data/analytics';
+
+// This component must be rendered as early as possible in <head>,
+// before any other scripts.
+//
+// STRICT BASIC CONSENT MODE:
+//
+// The Google Tag Manager container script is NOT loaded on page load.
+// It is only requested over the network once the visitor has made (or
+// previously made, within the 6-month validity window) a consent
+// choice that grants at least one of Analytics or Marketing. If the
+// visitor rejects both, or simply hasn't chosen yet, the GTM
+// measurement stack is never requested at all this visit.
+//
+// This is stricter than the earlier "load GTM immediately with denied
+// defaults" approach. Setting a denied default is still useful and
+// still happens below (it is a local dataLayer entry, not a network
+// request), but it is no longer what gates the actual container
+// script — the script's presence in the page is what's gated now.
+---
+<script define:vars={{ GTM_CONTAINER_ID, CONSENT_STORAGE_KEY }}>
+  // Consent choices are valid for approximately 6 months, after which
+  // they are treated as expired and the visitor is asked again.
+  var CONSENT_MAX_AGE_MS = 1000 * 60 * 60 * 24 * 30 * 6;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () {
+    window.dataLayer.push(arguments);
+  };
+
+  // Local bookkeeping only — no network request, no measurement stack
+  // loaded. Establishes the denied baseline any later gtag() call
+  // builds on.
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500,
+  });
+
+  // Reads and validates any stored consent choice. Returns null if
+  // none exists, or if it is older than the 6-month validity window
+  // (in which case the expired entry is cleared so the banner shows
+  // again on this and future page loads until a new choice is made).
+  window.__mtmGetValidConsent = function () {
+    try {
+      var raw = localStorage.getItem(CONSENT_STORAGE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed.timestamp !== 'number') return null;
+      if (Date.now() - parsed.timestamp > CONSENT_MAX_AGE_MS) {
+        localStorage.removeItem(CONSENT_STORAGE_KEY);
+        return null;
+      }
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  // Pushes a consent state update. Local bookkeeping only — safe to
+  // call whether or not GTM has loaded (e.g. a visitor who granted
+  // consent earlier this session and then revisits Cookie Preferences
+  // to reject: this correctly signals denial to any tag that re-checks
+  // consent state, even though the already-loaded GTM script itself
+  // can't be "unloaded").
+  window.__mtmApplyConsent = function (mappedState) {
+    gtag('consent', 'update', mappedState);
+  };
+
+  // Loads the GTM container script, exactly once. Must only be called
+  // when at least one consent category has been granted - callers
+  // (below, and ConsentBanner.astro) are responsible for that check.
+  window.__mtmEnsureGtmLoaded = function () {
+    if (window.__mtmGtmLoaded) return;
+    window.__mtmGtmLoaded = true;
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', GTM_CONTAINER_ID);
+  };
+
+  // --- Returning-visitor handling -------------------------------------
+  var existing = window.__mtmGetValidConsent();
+  if (existing) {
+    var mapped = {
+      analytics_storage: existing.analytics === 'granted' ? 'granted' : 'denied',
+      ad_storage: existing.marketing === 'granted' ? 'granted' : 'denied',
+      ad_user_data: existing.marketing === 'granted' ? 'granted' : 'denied',
+      ad_personalization: existing.marketing === 'granted' ? 'granted' : 'denied',
+    };
+    window.__mtmApplyConsent(mapped);
+    if (existing.analytics === 'granted' || existing.marketing === 'granted') {
+      // Valid stored consent grants something — load GTM now, already
+      // carrying the correct state (the update above landed in
+      // dataLayer before the container script is requested).
+      window.__mtmEnsureGtmLoaded();
+    }
+    // Valid stored consent that rejects everything: GTM stays
+    // unloaded. Nothing further to do here.
+  }
+  // No valid existing consent (first visit, or an expired choice that
+  // was just cleared above): GTM is NOT requested. It loads later only
+  // if the consent banner records a choice that grants something.
+</script>

@@ -1,112 +1,95 @@
 ---
 import { primaryCta } from '../../data/nav';
 ---
-<section class="final-cta">
-  <div class="cta-card">
-    <div class="cta-text">
-      <p class="eyebrow">Let's Build Something Clearer</p>
-      <h2>Ready for a website and brand that actually support your growth?</h2>
-      <p class="cta-copy">
-        Start with a focused conversation about where you are, what is
-        getting in the way, and what would make the biggest difference.
+<section class="final-cta" id="final-cta">
+  <div class="cta-inner">
+    <div class="cta-copy">
+      <h2>Let's Build Something That Moves Your Organization Forward.</h2>
+      <p>
+        Tell us what you're working on, where you're stuck, and what you want to
+        accomplish. We'll explore whether Miami Tech Media is the right creative
+        partner to help.
       </p>
     </div>
 
-    <a href={primaryCta.href} target="_blank" rel="noopener" class="cta-button">
-      Schedule a Discovery Call
-    </a>
+    <div class="cta-action">
+      <a href={primaryCta.href} target="_blank" rel="noopener" class="cta-button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="btn-icon">
+          <rect x="3.5" y="4.5" width="17" height="16" rx="2"/>
+          <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/>
+          <line x1="7.5" y1="2.5" x2="7.5" y2="6.5"/>
+          <line x1="16.5" y1="2.5" x2="16.5" y2="6.5"/>
+        </svg>
+        {primaryCta.label}
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
   .final-cta {
-    padding: 5rem 3rem;
-    background: var(--white);
-  }
-
-  .cta-card {
-    max-width: 1200px;
-    margin: 0 auto;
     background: var(--rich);
-    border-radius: 28px;
-    padding: 4rem 4.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    border-top: 1px solid rgba(248, 250, 252, 0.1);
+  }
+
+  .cta-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 3rem 7rem;
+    display: grid;
+    grid-template-columns: 1fr 280px;
     gap: 3rem;
-  }
-
-  .cta-text {
-    max-width: 640px;
-  }
-
-  .eyebrow {
-    display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    color: var(--blue);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.35rem 0.9rem;
-    border-radius: 100px;
-    margin: 0 0 1.25rem;
   }
 
   h2 {
-    font-size: clamp(1.75rem, 2.8vw, 2.35rem);
-    font-weight: 600;
+    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    font-weight: 700;
     color: #fff;
-    letter-spacing: -0.025em;
-    line-height: 1.25;
-    margin: 0 0 1rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem;
   }
 
-  .cta-copy {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.62);
-    line-height: 1.7;
+  .cta-copy p {
+    font-size: 1.05rem;
+    color: rgba(248, 250, 252, 0.62);
+    line-height: 1.65;
+    max-width: 560px;
     margin: 0;
   }
 
   .cta-button {
-    flex-shrink: 0;
-    display: inline-block;
-    background: #fff;
-    color: var(--rich);
-    padding: 1rem 2.1rem;
-    border-radius: 8px;
-    font-size: 0.98rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: var(--blue);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
-    white-space: nowrap;
-    transition: opacity 0.2s ease, transform 0.15s ease;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
   }
 
   .cta-button:hover {
-    opacity: 0.88;
-    transform: translateY(-1px);
+    opacity: 0.9;
   }
 
-  @media (max-width: 860px) {
-    .final-cta {
-      padding: 3.5rem 1.5rem;
-    }
-
-    .cta-card {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 2.75rem 2rem;
+  @media (max-width: 900px) {
+    .cta-inner {
+      grid-template-columns: 1fr;
       gap: 2rem;
-      border-radius: 22px;
-    }
-
-    .cta-button {
-      width: 100%;
-      text-align: center;
+      padding: 4rem 1.5rem 4.5rem;
     }
   }
 </style>
