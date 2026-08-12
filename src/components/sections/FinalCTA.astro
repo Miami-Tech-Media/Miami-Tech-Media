@@ -1,95 +1,306 @@
 ---
 import { primaryCta } from '../../data/nav';
 ---
-<section class="final-cta" id="final-cta">
-  <div class="cta-inner">
-    <div class="cta-copy">
-      <h2>Let's Build Something That Moves Your Organization Forward.</h2>
-      <p>
-        Tell us what you're working on, where you're stuck, and what you want to
-        accomplish. We'll explore whether Miami Tech Media is the right creative
-        partner to help.
+<section class="contact" id="final-cta" aria-labelledby="contact-heading">
+  <div class="contact-inner">
+    <div class="contact-copy">
+      <p class="eyebrow">Let's Talk</p>
+      <h2 id="contact-heading">Tell me what you're working on.</h2>
+      <p class="contact-body">
+        Have a project in mind, a challenge you're trying to solve, or just a
+        question? Send me a message. I'll personally take a look and get back
+        to you.
       </p>
     </div>
 
-    <div class="cta-action">
-      <a href={primaryCta.href} target="_blank" rel="noopener" class="cta-button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="btn-icon">
-          <rect x="3.5" y="4.5" width="17" height="16" rx="2"/>
-          <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/>
-          <line x1="7.5" y1="2.5" x2="7.5" y2="6.5"/>
-          <line x1="16.5" y1="2.5" x2="16.5" y2="6.5"/>
-        </svg>
-        {primaryCta.label}
-      </a>
+    <div class="contact-form-wrap">
+      <form
+        id="contact-form"
+        class="contact-form"
+        action="https://formspree.io/f/myegjeqb"
+        method="POST"
+      >
+        <div class="form-field">
+          <label for="contact-name">Name*</label>
+          <input type="text" id="contact-name" name="name" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contact-email">Email*</label>
+          <input type="email" id="contact-email" name="email" required />
+        </div>
+
+        <div class="form-field">
+          <label for="contact-org">Organization</label>
+          <input type="text" id="contact-org" name="organization" />
+        </div>
+
+        <div class="form-field">
+          <label for="contact-message">What are you working on?*</label>
+          <textarea id="contact-message" name="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="contact-submit-btn">
+          Send Message
+        </button>
+
+        <p class="form-error" id="contact-form-error" role="alert" hidden>
+          Something went wrong. Please try again.
+        </p>
+      </form>
+
+      <div class="form-success" id="contact-form-success" role="status" hidden>
+        <p>Thanks! Your message has been sent. I'll get back to you soon.</p>
+      </div>
+
+      <div class="secondary-path">
+        <p class="secondary-text">Prefer to talk it through?</p>
+        <a href={primaryCta.href} target="_blank" rel="noopener" class="secondary-link">
+          Schedule a Discovery Call
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="link-arrow">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  var contactForm = document.getElementById('contact-form');
+  var submitBtn = document.getElementById('contact-submit-btn');
+  var errorMsg = document.getElementById('contact-form-error');
+  var successBlock = document.getElementById('contact-form-success');
+  var isSubmitting = false;
+
+  if (contactForm && submitBtn) {
+    var originalBtnText = submitBtn.textContent;
+
+    contactForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Guard against duplicate submissions while a request is in flight.
+      if (isSubmitting) return;
+      isSubmitting = true;
+
+      errorMsg.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      var formData = new FormData(contactForm);
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      })
+        .then(function (response) {
+          if (response.ok) {
+            contactForm.hidden = true;
+            successBlock.hidden = false;
+          } else {
+            throw new Error('Submission failed');
+          }
+        })
+        .catch(function () {
+          // Entered data is left untouched - the form is not cleared
+          // or hidden on error, only the button and inline message
+          // change state.
+          errorMsg.hidden = false;
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+          isSubmitting = false;
+        });
+    });
+  }
+</script>
+
 <style>
-  .final-cta {
-    background: var(--rich);
-    border-top: 1px solid rgba(248, 250, 252, 0.1);
+  .contact {
+    background: var(--light);
+    border-top: 1px solid var(--gray);
   }
 
-  .cta-inner {
+  .contact-inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 5rem 3rem 7rem;
+    padding: 5.5rem 3rem;
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 3rem;
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .contact-copy {
+    padding-top: 0.25rem;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    font-size: clamp(1.85rem, 3.2vw, 2.5rem);
     font-weight: 700;
-    color: #fff;
+    color: var(--rich);
     line-height: 1.15;
     letter-spacing: -0.02em;
     margin: 0 0 1.5rem;
   }
 
-  .cta-copy p {
-    font-size: 1.05rem;
-    color: rgba(248, 250, 252, 0.62);
-    line-height: 1.65;
-    max-width: 560px;
+  .contact-body {
+    font-size: 1.02rem;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 460px;
     margin: 0;
   }
 
-  .cta-button {
+  .contact-form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .contact-form[hidden] {
+    display: none;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--rich);
+  }
+
+  .form-field input,
+  .form-field textarea {
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--rich);
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    padding: 0.75rem 0.85rem;
+    min-height: 44px;
+  }
+
+  .form-field textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    outline: 2px solid var(--blue);
+    outline-offset: 1px;
+    border-color: var(--blue);
+  }
+
+  .form-submit {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    width: 100%;
+    min-height: 44px;
     background: var(--blue);
     color: #fff;
-    padding: 1rem 1.5rem;
+    border: none;
     border-radius: 6px;
+    font-family: inherit;
     font-size: 0.95rem;
     font-weight: 600;
-    text-decoration: none;
+    padding: 0.85rem 1.5rem;
+    cursor: pointer;
     transition: opacity 0.2s ease;
   }
 
-  .btn-icon {
-    width: 15px;
-    height: 15px;
-    flex-shrink: 0;
-  }
-
-  .cta-button:hover {
+  .form-submit:hover {
     opacity: 0.9;
   }
 
+  .form-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .form-error {
+    font-size: 0.88rem;
+    color: #B91C1C;
+    margin: 0;
+  }
+
+  .form-success {
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .form-success p {
+    font-size: 0.98rem;
+    color: var(--rich);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .secondary-path {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .secondary-text {
+    font-size: 0.9rem;
+    color: var(--mid);
+    margin: 0;
+  }
+
+  .secondary-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--blue);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .link-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+  }
+
+  .secondary-link:hover .link-arrow {
+    transform: translateX(2px);
+  }
+
   @media (max-width: 900px) {
-    .cta-inner {
+    .contact-inner {
       grid-template-columns: 1fr;
-      gap: 2rem;
-      padding: 4rem 1.5rem 4.5rem;
+      gap: 2.5rem;
+      padding: 4rem 1.5rem;
     }
   }
 </style>

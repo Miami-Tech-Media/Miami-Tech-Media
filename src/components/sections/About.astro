@@ -36,7 +36,7 @@
 
 <style>
   .about {
-    background: var(--rich);
+    background: var(--white);
     overflow: hidden;
   }
 
@@ -67,7 +67,7 @@
   h2 {
     font-size: clamp(1.85rem, 3.2vw, 2.75rem);
     font-weight: 700;
-    color: #fff;
+    color: var(--rich);
     line-height: 1.15;
     letter-spacing: -0.02em;
     margin: 0 0 2rem;
@@ -81,30 +81,28 @@
 
   .about-body p {
     font-size: 1rem;
-    color: rgba(248, 250, 252, 0.62);
+    color: var(--mid);
     line-height: 1.7;
     margin: 0;
   }
 
-  /* Approved founder portrait. Same reserved dimensions as the prior
-     placeholder - only the content of this container changed. */
+  /* Approved founder portrait, shown at its full intrinsic composition
+     - no cropping. Border preserved for definition against the light
+     background; no border-radius was present before, none added now. */
   .about-media {
     position: relative;
-    height: 400px;
     overflow: hidden;
-    border: 1px solid rgba(248, 250, 252, 0.1);
+    border: 1px solid var(--gray);
   }
 
-  .about-media picture,
+  .about-media picture {
+    display: block;
+  }
+
   .about-media img {
     display: block;
     width: 100%;
-    height: 100%;
-  }
-
-  .about-media img {
-    object-fit: cover;
-    object-position: 62% center;
+    height: auto;
   }
 
   @media (max-width: 1024px) {
@@ -120,18 +118,7 @@
     }
 
     .about-media {
-      height: 320px;
       margin: 0 -1.5rem;
-    }
-
-    .about-media img {
-      object-position: center 45%;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .about-media img {
-      object-position: center 42%;
     }
   }
 </style>
