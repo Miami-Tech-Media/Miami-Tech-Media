@@ -19,9 +19,17 @@
       </div>
     </div>
 
-    <div class="about-media" role="img" aria-label="Placeholder — approved photography pending">
-      <div class="media-scrim"></div>
-      <p class="media-note">Photography pending</p>
+    <div class="about-media">
+      <picture>
+        <source srcset="/images/jorge-founder-portrait.avif" type="image/avif" />
+        <source srcset="/images/jorge-founder-portrait.webp" type="image/webp" />
+        <img
+          src="/images/jorge-founder-portrait.webp"
+          alt="Jorge, founder and creative director of Miami Tech Media, in a modern workspace."
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
     </div>
   </div>
 </section>
@@ -78,34 +86,25 @@
     margin: 0;
   }
 
-  /* Temporary placeholder standing in for the approved About photography.
-     Not hotlinked from any external source; to be replaced once a real,
-     approved, self-hosted asset is supplied. */
+  /* Approved founder portrait. Same reserved dimensions as the prior
+     placeholder - only the content of this container changed. */
   .about-media {
     position: relative;
     height: 400px;
-    background: linear-gradient(160deg, #1e293b 0%, var(--rich) 70%);
+    overflow: hidden;
     border: 1px solid rgba(248, 250, 252, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .media-scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(15, 23, 42, 0.3), transparent);
+  .about-media picture,
+  .about-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
-  .media-note {
-    position: relative;
-    z-index: 1;
-    color: rgba(248, 250, 252, 0.5);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 0;
+  .about-media img {
+    object-fit: cover;
+    object-position: 62% center;
   }
 
   @media (max-width: 1024px) {
@@ -123,6 +122,16 @@
     .about-media {
       height: 320px;
       margin: 0 -1.5rem;
+    }
+
+    .about-media img {
+      object-position: center 45%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-media img {
+      object-position: center 42%;
     }
   }
 </style>
