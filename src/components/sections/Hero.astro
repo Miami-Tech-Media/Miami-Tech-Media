@@ -48,6 +48,19 @@ import { primaryCta } from '../../data/nav';
   </div>
 </section>
 
+<script>
+  // Discovery Call click tracking. Fires only on an intentional click,
+  // does not preventDefault or delay navigation - the link's normal
+  // target="_blank" navigation proceeds unchanged. No PII included.
+  const heroCta = document.querySelector('.hero .btn-primary');
+  if (heroCta) {
+    heroCta.addEventListener('click', () => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'discovery_call_click', cta_location: 'hero' });
+    });
+  }
+</script>
+
 <style>
   .hero {
     background: var(--white);

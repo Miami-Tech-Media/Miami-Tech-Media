@@ -91,6 +91,16 @@ import { logoLines, navLinks, primaryCta } from '../../data/nav';
       }
     });
   }
+
+  // Discovery Call click tracking. Fires only on an intentional click,
+  // does not preventDefault or delay navigation - the link's normal
+  // target="_blank" navigation proceeds unchanged. No PII included.
+  document.querySelectorAll('.nav-cta, .mobile-cta').forEach((link) => {
+    link.addEventListener('click', () => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'discovery_call_click', cta_location: 'header' });
+    });
+  });
 </script>
 
 <style>

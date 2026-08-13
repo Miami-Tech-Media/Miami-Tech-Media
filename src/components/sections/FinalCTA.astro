@@ -121,6 +121,17 @@ import { primaryCta } from '../../data/nav';
         });
     });
   }
+
+  // Discovery Call click tracking (separate from the form-submission
+  // tracking above). Fires only on an intentional click, does not
+  // preventDefault or delay navigation. No PII included.
+  var discoveryLink = document.querySelector('.secondary-link');
+  if (discoveryLink) {
+    discoveryLink.addEventListener('click', function () {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'discovery_call_click', cta_location: 'contact' });
+    });
+  }
 </script>
 
 <style>
