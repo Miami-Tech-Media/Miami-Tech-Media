@@ -10,7 +10,7 @@ interface Props {
 }
 
 const {
-  title = 'Miami Tech Media | Branding, Web Design & Content',
+  title = 'Miami Tech Media | Creative Strategy & Content Creation',
   description = 'Miami Tech Media helps technology companies and organizations build stronger brands, websites, and content through strategy, creative direction, and AI-assisted workflows.',
 } = Astro.props;
 
@@ -34,6 +34,7 @@ const organizationJsonLd = {
     <GtmHead />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
