@@ -2,6 +2,20 @@
 import { primaryCta } from '../../data/nav';
 ---
 <section class="hero">
+  <picture class="hero-media">
+    <source srcset="/images/hero.avif" type="image/avif" />
+    <img
+      src="/images/hero.webp"
+      alt="Technology professionals collaborating outdoors at a Miami waterfront setting"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="hero-gradient"></div>
+  <div class="hero-vignette"></div>
+
   <div class="hero-inner">
     <div class="hero-copy">
       <h1>
@@ -31,27 +45,12 @@ import { primaryCta } from '../../data/nav';
         </a>
       </div>
     </div>
-
-    <div class="hero-media">
-      <picture>
-        <source srcset="/images/hero.avif" type="image/avif" />
-        <img
-          src="/images/hero.webp"
-          alt="Technology professionals collaborating outdoors at a Miami waterfront setting"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </picture>
-      <div class="hero-media-scrim"></div>
-    </div>
   </div>
 </section>
 
 <script>
-  // Discovery Call click tracking. Fires only on an intentional click,
-  // does not preventDefault or delay navigation - the link's normal
-  // target="_blank" navigation proceeds unchanged. No PII included.
+  // Discovery Call click tracking - unchanged. Fires only on an
+  // intentional click, does not preventDefault or delay navigation.
   const heroCta = document.querySelector('.hero .btn-primary');
   if (heroCta) {
     heroCta.addEventListener('click', () => {
@@ -63,31 +62,73 @@ import { primaryCta } from '../../data/nav';
 
 <style>
   .hero {
-    background: var(--white);
+    position: relative;
     overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    background: var(--rich);
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 65% bottom;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.88) 0%,
+      rgba(15, 23, 42, 0.74) 28%,
+      rgba(15, 23, 42, 0.36) 48%,
+      rgba(15, 23, 42, 0.09) 65%,
+      transparent 80%
+    );
+  }
+
+  .hero-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2), transparent);
   }
 
   .hero-inner {
+    position: relative;
+    z-index: 10;
+    width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 4rem 3rem 6rem;
-    display: grid;
-    grid-template-columns: 1fr 500px;
-    gap: 4rem;
-    align-items: center;
+    padding: 5rem 1.5rem;
   }
 
   .hero-copy {
-    max-width: 620px;
+    max-width: 570px;
   }
 
   h1 {
-    font-size: clamp(2.25rem, 4vw, 4rem);
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--rich);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    margin: 0 0 1.5rem;
+    color: #fff;
+    line-height: 1.13;
+    letter-spacing: -0.015em;
+    margin: 0 0 1.25rem;
   }
 
   .accent-dot {
@@ -95,30 +136,32 @@ import { primaryCta } from '../../data/nav';
   }
 
   .hero-subhead {
-    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
-    font-weight: 500;
-    color: var(--slate);
-    line-height: 1.6;
-    margin: 0 0 2.5rem;
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.625;
+    margin: 0 0 2.25rem;
   }
 
   .hero-actions {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 
   .btn-primary {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     background: var(--blue);
     color: #fff;
-    padding: 0.9rem 1.6rem;
+    padding: 0.875rem 1.5rem;
     border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
     text-decoration: none;
     transition: opacity 0.2s ease;
   }
@@ -139,10 +182,11 @@ import { primaryCta } from '../../data/nav';
     gap: 0.5rem;
     background: none;
     border: none;
-    color: var(--rich);
-    padding: 0.9rem 0.25rem;
-    font-size: 0.95rem;
-    font-weight: 600;
+    color: rgba(255, 255, 255, 0.94);
+    padding: 0.875rem 0.5rem;
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
     text-decoration: none;
     transition: color 0.2s ease;
   }
@@ -154,54 +198,45 @@ import { primaryCta } from '../../data/nav';
   }
 
   .btn-secondary:hover {
-    color: var(--blue);
+    color: #fff;
   }
 
   .btn-secondary:hover .btn-arrow {
     transform: translateX(2px);
   }
 
-  .hero-media {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--gray);
-  }
-
-  .hero-media img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .hero-media-scrim {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(15, 23, 42, 0.1), transparent);
-  }
-
-  @media (max-width: 1024px) {
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-      padding: 3.5rem 2rem 3.5rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .hero-inner {
-      padding: 3rem 1.5rem 3rem;
-    }
-
+  @media (min-width: 640px) {
     .hero-actions {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      min-height: 700px;
     }
 
-    .btn-primary {
-      width: 100%;
-      justify-content: center;
+    .hero-media img {
+      object-position: center bottom;
+    }
+
+    .hero-inner {
+      padding: 6rem 2.5rem;
+    }
+
+    h1 {
+      font-size: 2.6rem;
+    }
+
+    .hero-subhead {
+      font-size: 1.125rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    h1 {
+      font-size: 2.8rem;
     }
   }
 </style>
