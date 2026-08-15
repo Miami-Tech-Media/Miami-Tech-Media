@@ -3,16 +3,20 @@ import { partners } from '../../data/partners';
 ---
 <section class="trusted-by" id="trusted-by">
   <div class="trusted-inner">
-    <div class="trusted-intro">
-      <p class="eyebrow">Trusted By</p>
-      <p class="intro-text">
-        Organizations across technology, innovation, education, and community development.
-      </p>
-    </div>
+    <p class="trust-statement">Trusted by organizations building what&rsquo;s next</p>
 
-    <ul class="partner-list">
-      {partners.map((name) => (
-        <li>{name}</li>
+    <ul class="logo-row">
+      {partners.map((partner) => (
+        <li class:list={['logo-item', `logo-${partner.slug}`]}>
+          <img
+            src={partner.file}
+            alt={partner.name}
+            width={partner.width}
+            height={partner.height}
+            loading="lazy"
+            decoding="async"
+          />
+        </li>
       ))}
     </ul>
   </div>
@@ -28,53 +32,141 @@ import { partners } from '../../data/partners';
   .trusted-inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 2.25rem 3rem 2.75rem;
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 2.5rem;
+    padding: 2.25rem 3rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 1.5rem;
   }
 
-  .eyebrow {
+  .trust-statement {
     color: var(--blue);
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin: 0 0 0.5rem;
-  }
-
-  .intro-text {
-    color: var(--slate);
-    font-size: 0.9rem;
-    font-weight: 500;
-    line-height: 1.4;
+    text-align: center;
     margin: 0;
+    max-width: 30ch;
   }
 
-  .partner-list {
+  /* Desktop: compact single horizontal row, centered,
+     subtle vertical dividers, no forced equal widths */
+  .logo-row {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 1.25rem 2rem;
+    justify-content: center;
+    gap: 2.25rem;
+    width: 100%;
   }
 
-  .partner-list li {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--mid);
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 2.25rem;
+    position: relative;
   }
 
+  .logo-item:first-child {
+    padding-left: 0;
+  }
+
+  .logo-item:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 28px;
+    background: var(--gray);
+  }
+
+  .logo-item img {
+    display: block;
+    height: 26px;
+    width: auto;
+    max-width: 140px;
+  }
+
+  /* Optical balance per the approved logo pack: preserve proportions,
+     but rein in the widest wordmarks so no single logo dominates the
+     row, and give the near-square mark a touch more height so it
+     doesn't read as tiny next to the wordmarks. */
+  .logo-atomic-vc img,
+  .logo-keyfactor img {
+    height: auto;
+    max-width: 108px;
+  }
+
+  .logo-elevate-capital img {
+    height: 32px;
+  }
+
+  /* Tablet / mobile: 2-column grid, Atomic VC reordered to a
+     final centered full-width row. CSS `order` only - DOM order
+     above is left untouched. */
   @media (max-width: 900px) {
     .trusted-inner {
-      grid-template-columns: 1fr;
+      padding: 2rem 1.5rem;
       gap: 1.25rem;
-      padding: 2rem 1.5rem 2.25rem;
+    }
+
+    .trust-statement {
+      max-width: 22ch;
+    }
+
+    .logo-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-items: center;
+      align-items: center;
+      row-gap: 1.5rem;
+      column-gap: 1rem;
+      width: 100%;
+    }
+
+    /* Remove the desktop dividers; not needed in a stacked grid. */
+    .logo-item::before {
+      display: none;
+    }
+
+    .logo-item {
+      padding-left: 0;
+    }
+
+    /* Row 1 */
+    .logo-miami-tech-works { order: 1; }
+    .logo-refresh-miami    { order: 2; }
+    /* Row 2 */
+    .logo-miami-dade-college { order: 3; }
+    .logo-elevate-capital    { order: 4; }
+    /* Row 3 */
+    .logo-keyfactor   { order: 5; }
+    .logo-united-way  { order: 6; }
+    /* Final row: centered, spanning both columns */
+    .logo-atomic-vc {
+      order: 7;
+      grid-column: 1 / -1;
+    }
+
+    .logo-item img {
+      height: 22px;
+      max-width: 120px;
+    }
+
+    .logo-atomic-vc img {
+      height: auto;
+      max-width: 96px;
+    }
+
+    .logo-elevate-capital img {
+      height: 26px;
     }
   }
 </style>
