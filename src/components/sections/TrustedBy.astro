@@ -115,8 +115,14 @@ import { partners } from '../../data/partners';
 
   /* Tablet / mobile: 2-column grid, Atomic VC reordered to a
      final centered full-width row. CSS `order` only - DOM order
-     above is left untouched. */
-  @media (max-width: 900px) {
+     above is left untouched.
+     Breakpoint widened from 900px to 1099px: the fixed-width
+     desktop no-wrap row only clears the viewport without
+     overflow starting at ~1075px, so 900-1074px previously
+     caused horizontal overflow. Reusing the existing, already
+     visually-balanced grid for that range removes the overflow
+     without introducing new layout or shrinking logos further. */
+  @media (max-width: 1099px) {
     .trusted-inner {
       padding: 2rem 1.5rem;
       gap: 1.25rem;
