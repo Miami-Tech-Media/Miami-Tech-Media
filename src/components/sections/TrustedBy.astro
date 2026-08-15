@@ -87,6 +87,8 @@ import { partners } from '../../data/partners';
     background: var(--gray);
   }
 
+  /* Rich Navy PNGs are used directly - CSS controls only size,
+     position, and spacing. No mask, filter, or recolor here. */
   .logo-item img {
     display: block;
     height: 26px;
@@ -94,19 +96,21 @@ import { partners } from '../../data/partners';
     max-width: 140px;
   }
 
-  /* Optical balance for the full-color/original assets: preserve
-     proportions, but rein in the widest wordmarks so no single logo
-     dominates the row, and give the compound two-line mark a touch
-     more height so it doesn't read as tiny next to the wordmarks. */
-  .logo-atomic-vc img,
-  .logo-keyfactor img {
-    height: 20px;
-    width: auto;
-    max-width: 160px;
+  /* Optical balance: preserve proportions, but rein in Atomic's very
+     wide wordmark so it doesn't dominate the row, and give Miami Tech
+     Works and Elevate Capital a slight size increase so their
+     perceived visual weight matches the surrounding logos. */
+  .logo-atomic-vc img {
+    height: auto;
+    max-width: 150px;
+  }
+
+  .logo-miami-tech-works img {
+    height: 31px;
   }
 
   .logo-elevate-capital img {
-    height: 32px;
+    height: 36px;
   }
 
   /* Tablet / mobile: 2-column grid, Atomic VC reordered to a
@@ -161,17 +165,34 @@ import { partners } from '../../data/partners';
       max-width: 120px;
     }
 
-    /* Atomic VC sits alone on its own full-width row here, so it has
-       room to be sized for legibility without risking overflow in a
-       shared column. */
+    /* Atomic VC sits alone on its own full-width row, but its very
+       wide wordmark (the widest aspect ratio in the set) was reading
+       as the dominant element on mobile even there - reduced so it
+       no longer pulls focus from the rest of the row. */
     .logo-atomic-vc img {
-      height: 22px;
-      width: auto;
-      max-width: 170px;
+      height: auto;
+      max-width: 110px;
+    }
+
+    /* Keyfactor's wordmark ran visually heavier than its neighbors
+       at the base mobile size - trimmed moderately. */
+    .logo-keyfactor img {
+      height: 18px;
+    }
+
+    /* United Way's compact circular mark was reading as noticeably
+       smaller than the surrounding wordmarks at the base size -
+       increased so its visual footprint feels comparable. */
+    .logo-united-way img {
+      height: 32px;
+    }
+
+    .logo-miami-tech-works img {
+      height: 27px;
     }
 
     .logo-elevate-capital img {
-      height: 26px;
+      height: 32px;
     }
   }
 </style>
