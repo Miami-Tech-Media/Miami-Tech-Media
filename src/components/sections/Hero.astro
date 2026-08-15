@@ -18,12 +18,14 @@ import { primaryCta } from '../../data/nav';
 
   <div class="hero-inner">
     <div class="hero-copy">
+      <p class="hero-eyebrow">Building the Miami Tech Community</p>
+
       <h1>
-        Helping Technology Organizations Tell Better Stories, Build Trust, and Grow<span class="accent-dot">.</span>
+        Helping the Organizations Building Miami Grow<span class="accent-dot">.</span>
       </h1>
 
       <p class="hero-subhead">
-        Building the Miami Tech Community Through Media, Marketing &amp; AI.
+        We partner with technology companies and mission-driven organizations to communicate clearly, build trust, and grow through creative strategy and content production.
       </p>
 
       <div class="hero-actions">
@@ -34,16 +36,18 @@ import { primaryCta } from '../../data/nav';
             <line x1="7.5" y1="2.5" x2="7.5" y2="6.5"/>
             <line x1="16.5" y1="2.5" x2="16.5" y2="6.5"/>
           </svg>
-          {primaryCta.label}
+          Let's Talk
         </a>
         <a href="#services" class="btn-secondary">
-          Explore Our Services
+          Explore Services
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="btn-arrow">
             <line x1="5" y1="12" x2="19" y2="12"/>
             <polyline points="12 5 19 12 12 19"/>
           </svg>
         </a>
       </div>
+
+      <p class="hero-trust">A strategic creative partner with deep roots in the Miami tech ecosystem and a growing presence in Orlando.</p>
     </div>
   </div>
 </section>
@@ -121,6 +125,16 @@ import { primaryCta } from '../../data/nav';
     max-width: 570px;
   }
 
+  .hero-eyebrow {
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 0.9rem;
+  }
+
   h1 {
     font-family: 'General Sans', system-ui, sans-serif;
     font-size: 2rem;
@@ -149,6 +163,16 @@ import { primaryCta } from '../../data/nav';
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
+  }
+
+  .hero-trust {
+    font-family: 'General Sans', system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    max-width: 460px;
+    margin: 1.5rem 0 0;
   }
 
   .btn-primary {
