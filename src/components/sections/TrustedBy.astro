@@ -24,7 +24,12 @@ import { partners } from '../../data/partners';
 
 <style>
   .trusted-by {
-    background: var(--white);
+    /* Approved section-specific background (Aug 2026): #F1F5FA creates
+       clearer separation from the Services section below. Does not
+       exactly match an existing token (--light is #F1F5F9), so it is
+       scoped to this component rather than added to tokens.css or
+       reusing a near-match token. */
+    background: #F1F5FA;
     border-top: 1px solid var(--gray);
     border-bottom: 1px solid var(--gray);
   }
