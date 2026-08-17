@@ -1,36 +1,107 @@
 ---
+const proofPoints = [
+  {
+    title: '10+ Years',
+    copy: 'Creative experience',
+    icon: 'people',
+  },
+  {
+    title: 'Deep Miami Tech Roots',
+    copy: 'Built within the community',
+    icon: 'pin',
+  },
+  {
+    title: 'Strategy + Production',
+    copy: 'From idea to execution',
+    icon: 'camera',
+  },
+  {
+    title: 'Direct Partnership',
+    copy: 'Work directly with Jorge',
+    icon: 'handshake',
+  },
+];
 ---
 <section class="about" id="about" aria-labelledby="about-heading">
   <div class="about-inner">
     <div class="about-copy">
       <p class="eyebrow">About Miami Tech Media</p>
-      <h2 id="about-heading">A Strategic Creative Partner for the Miami Tech Community</h2>
+      <div class="accent-line" aria-hidden="true"></div>
+
+      <h2 id="about-heading">
+        A Strategic<br />
+        Creative Partner<br />
+        <em>who has your back.</em>
+      </h2>
+
       <div class="about-body">
         <p>
-          Miami Tech Media helps technology companies, startups, innovation organizations,
-          and mission-driven businesses communicate clearly, build trust, and strengthen
-          their digital presence.
+          Miami Tech Media grew from years of working alongside the people and
+          organizations building Miami&rsquo;s technology community.
         </p>
         <p>
-          Founded by Jorge, Miami Tech Media combines creative strategy, storytelling,
-          design, content, and AI-assisted workflows with years of experience working
-          alongside organizations in the technology and innovation community.
+          What started with photography and video grew into something more.
+          Clients needed someone who could understand the bigger picture,
+          help shape the idea, and then bring it to life through creative
+          strategy and content production.
         </p>
       </div>
+
+      <blockquote class="trust-statement">
+        <strong>Today, you work directly with Jorge</strong>
+        from the first conversation through the final result.
+      </blockquote>
     </div>
 
     <div class="about-media">
-      <picture>
-        <source srcset="/images/jorge-founder-portrait.avif" type="image/avif" />
-        <source srcset="/images/jorge-founder-portrait.webp" type="image/webp" />
-        <img
-          src="/images/jorge-founder-portrait.webp"
-          alt="Jorge, founder and creative director of Miami Tech Media, in a modern workspace."
-          loading="lazy"
-          decoding="async"
-        />
-      </picture>
+      <div class="about-media-frame">
+        <picture>
+          <source srcset="/images/jorge-founder-portrait.avif" type="image/avif" />
+          <source srcset="/images/jorge-founder-portrait.webp" type="image/webp" />
+          <img
+            src="/images/jorge-founder-portrait.webp"
+            alt="Jorge, founder and creative director of Miami Tech Media, in a modern workspace overlooking the Miami skyline."
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+        <span class="location-tag" aria-hidden="true">Miami, FL</span>
+      </div>
     </div>
+  </div>
+
+  <div class="proof-row">
+    {proofPoints.map((point) => (
+      <div class="proof-item">
+        <div class="proof-icon" aria-hidden="true">
+          {point.icon === 'people' ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="8" r="3" />
+              <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
+              <path d="M15.5 8.5a2.5 2.5 0 1 1 0-5" />
+              <path d="M14.5 12.5c2.6.4 4.5 2.2 5 5" />
+            </svg>
+          ) : point.icon === 'pin' ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" />
+              <circle cx="12" cy="9.5" r="2.25" />
+            </svg>
+          ) : point.icon === 'camera' ? (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8.5a1.5 1.5 0 0 1 1.5-1.5h2l1-1.5h7l1 1.5h2A1.5 1.5 0 0 1 20 8.5v8A1.5 1.5 0 0 1 18.5 18h-13A1.5 1.5 0 0 1 4 16.5v-8Z" />
+              <circle cx="12" cy="12.5" r="3.25" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9.25" cy="12" r="5.75" />
+              <circle cx="14.75" cy="12" r="5.75" />
+            </svg>
+          )}
+        </div>
+        <div class="proof-title">{point.title}</div>
+        <p class="proof-copy">{point.copy}</p>
+      </div>
+    ))}
   </div>
 </section>
 
@@ -38,6 +109,7 @@
   .about {
     background: var(--white);
     overflow: hidden;
+    padding: 6rem 0 5rem;
   }
 
   .about-inner {
@@ -45,80 +117,245 @@
     margin: 0 auto;
     padding: 0 3rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 0;
     align-items: center;
-    min-height: 560px;
   }
 
+  /* ── COPY ── */
   .about-copy {
-    padding: 5rem 0;
+    padding: 0 3.5rem 0 0;
+    position: relative;
+    z-index: 2;
   }
 
   .eyebrow {
     color: var(--blue);
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
+    margin: 0 0 0.85rem;
+  }
+
+  .accent-line {
+    width: 32px;
+    height: 2px;
+    background: var(--blue);
     margin: 0 0 1.5rem;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+    font-size: clamp(2.1rem, 3.4vw, 2.9rem);
     font-weight: 700;
     color: var(--rich);
-    line-height: 1.15;
+    line-height: 1.14;
     letter-spacing: -0.02em;
-    margin: 0 0 2rem;
+    margin: 0 0 1.75rem;
+  }
+
+  h2 em {
+    color: var(--blue);
+    font-style: italic;
+    font-weight: 500;
   }
 
   .about-body {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.1rem;
+    margin-bottom: 1.75rem;
   }
 
   .about-body p {
     font-size: 1rem;
     color: var(--mid);
-    line-height: 1.7;
+    line-height: 1.72;
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .trust-statement {
+    margin: 0;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--blue);
+    font-size: 0.98rem;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  .trust-statement strong {
+    display: block;
+    color: var(--rich);
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  /* ── MEDIA ── */
+  .about-media {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .about-media-frame {
+    position: relative;
+    width: 100%;
+    clip-path: polygon(14% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .about-media-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--light);
+    transform: translate(-14px, -14px);
+    clip-path: polygon(14% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: -1;
+  }
+
+  .about-media-frame picture {
+    display: block;
+    height: 100%;
+  }
+
+  .about-media-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    object-fit: cover;
+  }
+
+  .location-tag {
+    position: absolute;
+    top: 1.75rem;
+    right: 1.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  /* ── PROOF ROW ── */
+  .proof-row {
+    max-width: 1280px;
+    margin: 4rem auto 0;
+    padding: 3.25rem 3rem 0;
+    border-top: 1px solid var(--gray);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+
+  .proof-item {
+    padding-right: 2.5rem;
+    border-right: 1px solid var(--gray);
+  }
+
+  .proof-item:last-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .proof-icon {
+    color: var(--blue);
+    width: 26px;
+    height: 26px;
+    margin-bottom: 1rem;
+  }
+
+  .proof-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .proof-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin-bottom: 0.4rem;
+  }
+
+  .proof-copy {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.55;
     margin: 0;
   }
 
-  /* Approved founder portrait, shown at its full intrinsic composition
-     - no cropping. Border preserved for definition against the light
-     background; no border-radius was present before, none added now. */
-  .about-media {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--gray);
-  }
-
-  .about-media picture {
-    display: block;
-  }
-
-  .about-media img {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
+  /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
+    .about {
+      padding: 4rem 0 3.5rem;
+    }
+
     .about-inner {
       grid-template-columns: 1fr;
-      gap: 0;
       padding: 0 1.5rem;
-      min-height: 0;
     }
 
     .about-copy {
-      padding: 3.5rem 0 2.5rem;
+      padding: 0 0 2.75rem;
     }
 
     .about-media {
-      margin: 0 -1.5rem;
+      margin: 0 -1.5rem 0;
+    }
+
+    .about-media-frame {
+      clip-path: none;
+    }
+
+    .about-media-frame::before {
+      display: none;
+    }
+
+    .about-media-frame img {
+      min-height: 340px;
+    }
+
+    .proof-row {
+      margin-top: 3rem;
+      padding: 2.5rem 1.5rem 0;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 2.25rem;
+    }
+
+    .proof-item {
+      padding-right: 1.5rem;
+    }
+
+    .proof-item:nth-child(2n) {
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-body p {
+      max-width: none;
+    }
+
+    .proof-row {
+      grid-template-columns: 1fr;
+      row-gap: 2rem;
+    }
+
+    .proof-item {
+      padding-right: 0;
+      border-right: none;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--gray);
+    }
+
+    .proof-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
     }
   }
 </style>
