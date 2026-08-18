@@ -10,4 +10,16 @@
   --gray: #E2E8F0;
   --mid: #64748B;
   --light: #F1F5F9;
+
+  /* Typography — shared scale for standard, non-editorial roles only.
+     Approved via the Typography Consistency Audit + Implementation
+     tasks (Aug 2026). Does NOT apply to Hero display type or the
+     About-section editorial treatment; those remain intentionally
+     distinct and are not tokenized here. */
+  --type-eyebrow-size: 0.68rem;
+  --type-eyebrow-tracking: 0.18em;
+  --type-body-lead-size: 1.02rem;
+  --type-body-size: 1rem;
+  --type-body-small-size: 0.92rem;
+  --type-button-size: 0.9rem;
 }

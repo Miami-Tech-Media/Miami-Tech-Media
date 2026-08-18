@@ -155,24 +155,24 @@ import { primaryCta } from '../../data/nav';
 
   .eyebrow {
     color: var(--blue);
-    font-size: 0.68rem;
+    font-size: var(--type-eyebrow-size);
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: var(--type-eyebrow-tracking);
     text-transform: uppercase;
     margin: 0 0 1.5rem;
   }
 
   h2 {
-    font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+    font-size: clamp(2rem, 3.4vw, 2.75rem);
     font-weight: 700;
     color: var(--rich);
-    line-height: 1.15;
+    line-height: 1.12;
     letter-spacing: -0.02em;
     margin: 0 0 1.5rem;
   }
 
   .contact-body {
-    font-size: 1.02rem;
+    font-size: var(--type-body-size);
     color: var(--mid);
     line-height: 1.7;
     max-width: 460px;
@@ -245,7 +245,7 @@ import { primaryCta } from '../../data/nav';
     border: none;
     border-radius: 6px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: var(--type-button-size);
     font-weight: 600;
     padding: 0.85rem 1.5rem;
     cursor: pointer;
@@ -299,7 +299,7 @@ import { primaryCta } from '../../data/nav';
     align-items: center;
     gap: 0.5rem;
     color: var(--blue);
-    font-size: 0.9rem;
+    font-size: var(--type-button-size);
     font-weight: 600;
     text-decoration: none;
   }
