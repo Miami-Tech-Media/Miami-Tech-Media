@@ -1,5 +1,15 @@
 ---
 import { logoLines, navLinks, primaryCta } from '../../data/nav';
+
+// Route-aware active state, replacing the old CSS `:first-child` rule
+// that always styled whichever link happened to be listed first
+// (previously "Home") regardless of the actual page. Only true,
+// path-only nav destinations are compared against the current route;
+// hash-only links (the homepage section links) never resolve to a
+// standalone route, so they intentionally never receive the active
+// state here.
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => !href.includes('#') && href === currentPath;
 ---
 <header class="site-header" id="site-header">
   <div class="header-inner">
@@ -9,7 +19,11 @@ import { logoLines, navLinks, primaryCta } from '../../data/nav';
 
     <nav class="nav-links" aria-label="Primary">
       {navLinks.map((link) => (
-        <a href={link.href} class="nav-link">{link.label}</a>
+        <a
+          href={link.href}
+          class={`nav-link${isActive(link.href) ? ' nav-link-active' : ''}`}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >{link.label}</a>
       ))}
     </nav>
 
@@ -151,7 +165,7 @@ import { logoLines, navLinks, primaryCta } from '../../data/nav';
     transition: color 0.2s ease;
   }
 
-  .nav-link:first-child {
+  .nav-link-active {
     color: var(--blue);
     border-bottom: 2px solid var(--blue);
     padding-bottom: 0.2rem;

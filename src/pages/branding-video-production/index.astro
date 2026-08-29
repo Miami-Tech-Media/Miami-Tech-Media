@@ -1,0 +1,655 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/nav/Header.astro';
+import Footer from '../../components/nav/Footer.astro';
+import { primaryCta } from '../../data/nav';
+
+// Approved page copy per the Brand Video Production SEO service page
+// task. This page is a standalone, single-purpose landing page — it
+// does not reuse the homepage FinalCTA/Services/About components,
+// since the approved copy for this page differs from the approved
+// homepage copy in each of those sections.
+
+const videoTypes = [
+  {
+    title: 'Brand Stories',
+    description: 'Introduce who you are, what you believe, and why your work matters.',
+  },
+  {
+    title: 'Interviews & Testimonials',
+    description: 'Turn real voices and experiences into credible, human stories.',
+  },
+  {
+    title: 'Company & Organization Profiles',
+    description: 'Give customers, partners, funders, or your community a clearer understanding of what you do.',
+  },
+  {
+    title: 'Campaign & Social Content',
+    description: 'Create video designed to support launches, campaigns, social media, and ongoing communication.',
+  },
+  {
+    title: 'Workforce & Community Stories',
+    description: 'Highlight people, programs, careers, initiatives, and the impact behind the work.',
+  },
+];
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Plan',
+    description: 'We clarify the audience, message, goals, story, logistics, and what needs to be captured.',
+  },
+  {
+    number: '02',
+    title: 'Produce',
+    description: 'We bring the plan to life through interviews, intentional visuals, and professional production.',
+  },
+  {
+    number: '03',
+    title: 'Deliver',
+    description: "We shape the footage into polished content designed around where and how you'll actually use it.",
+  },
+];
+
+const faqs = [
+  {
+    question: 'How much does brand video production cost?',
+    answer:
+      "Every production is different. Scope, filming time, locations, crew needs, editing, and deliverables all affect the investment. We'll help define what you actually need before recommending a production approach.",
+  },
+  {
+    question: 'Can you help us figure out what the video should say?',
+    answer:
+      'Yes. Strategy and planning are part of the process. We can help clarify the audience, message, story, interviews, and content needed before production begins.',
+  },
+  {
+    question: 'Can we create multiple videos from one shoot?',
+    answer:
+      'Absolutely. When appropriate, we can plan a production around multiple deliverables, including a primary video, shorter edits, interviews, B-roll, and social content.',
+  },
+  {
+    question: 'Can you provide photography during the production?',
+    answer: 'Yes. Photography can often be incorporated into a larger content production when it makes sense for the project.',
+  },
+  {
+    question: 'Do you only work with technology companies?',
+    answer:
+      "No. Miami Tech Media has deep roots in Miami's technology community, but we also work with mission-driven organizations, professional associations, workforce initiatives, community organizations, and growth-oriented businesses.",
+  },
+];
+
+// Minimal Service structured data. Only visible, approved page content
+// is represented here — no ratings, reviews, pricing, or claims beyond
+// what appears on the page. Nests the same Organization identity used
+// site-wide in BaseLayout rather than inventing a separate entity.
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Brand Video Production',
+  name: 'Brand Video Production',
+  description:
+    'Strategic brand video production in Miami for technology companies, mission-driven organizations, and growing businesses. Plan and produce content with purpose.',
+  areaServed: 'Miami, FL',
+  provider: {
+    '@type': 'Organization',
+    name: 'Miami Tech Media',
+    url: 'https://miamitech.media/',
+  },
+};
+---
+<BaseLayout
+  title="Brand Video Production Miami | Miami Tech Media"
+  description="Strategic brand video production in Miami for technology companies, mission-driven organizations, and growing businesses. Plan and produce content with purpose."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceJsonLd)} />
+  <Header />
+  <main>
+    <!-- HERO -->
+    <section class="bvp-hero" aria-labelledby="bvp-hero-heading">
+      <div class="bvp-hero-inner">
+        <p class="eyebrow">Brand Video Production</p>
+        <h1 id="bvp-hero-heading">Brand Video Production in Miami</h1>
+        <p class="bvp-hero-sub">
+          Tell your story clearly, build trust, and create content with a purpose through strategic video production.
+        </p>
+        <a
+          href={primaryCta.href}
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+          id="bvp-hero-cta"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="btn-icon">
+            <rect x="3.5" y="4.5" width="17" height="16" rx="2"/>
+            <line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/>
+            <line x1="7.5" y1="2.5" x2="7.5" y2="6.5"/>
+            <line x1="16.5" y1="2.5" x2="16.5" y2="6.5"/>
+          </svg>
+          Let's Talk
+        </a>
+      </div>
+    </section>
+
+    <!-- CLEAR STORY -->
+    <section class="bvp-section bvp-story" aria-labelledby="bvp-story-heading">
+      <div class="bvp-section-inner bvp-narrow">
+        <h2 id="bvp-story-heading">A Good Video Starts With a Clear Story</h2>
+        <p>
+          Great production matters. But before the cameras roll, we want to understand what you're trying to
+          communicate, who needs to hear it, and what you want them to take away.
+        </p>
+        <p>
+          Miami Tech Media combines creative strategy with thoughtful production to create videos that don't just
+          look good. They have a reason to exist.
+        </p>
+      </div>
+    </section>
+
+    <!-- VIDEO TYPES -->
+    <section class="bvp-section bvp-types" aria-labelledby="bvp-types-heading">
+      <div class="bvp-section-inner">
+        <h2 id="bvp-types-heading">Video Built Around What You Need to Communicate</h2>
+        <p class="bvp-types-intro">
+          From one focused story to an ongoing content library, we can help plan and produce:
+        </p>
+        <div class="bvp-types-grid">
+          {videoTypes.map((type) => (
+            <article class="bvp-type-card">
+              <h3>{type.title}</h3>
+              <p>{type.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ONE PRODUCTION, MORE CONTENT -->
+    <section class="bvp-section bvp-library" aria-labelledby="bvp-library-heading">
+      <div class="bvp-section-inner bvp-library-grid">
+        <div class="bvp-library-copy">
+          <h2 id="bvp-library-heading">One Production. More Useful Content.</h2>
+          <p>A well-planned shoot can create much more than one finished video.</p>
+          <p>
+            When it makes sense for the project, we can capture interviews, B-roll, photography, and shorter video
+            edits during the same production, giving your organization a flexible library of content to use across
+            your website, social media, presentations, campaigns, and future communications.
+          </p>
+        </div>
+        <!--
+          No approved brand-video portfolio image or asset currently
+          exists in the repository (public/images contains only the
+          homepage hero and Jorge's portraits — no production/B-roll
+          photography). Per the task's visual constraint, this frame is
+          intentionally left as a simple, honest placeholder rather
+          than a fake video player, a "Coming Soon" label, or an
+          unrelated image. It is sized and structured so a real
+          production photo can be dropped in later (same aspect ratio
+          and frame treatment as the About section's image) without a
+          layout change. ASSET NEEDED — see completion report.
+        -->
+        <div class="bvp-library-media" role="img" aria-label="Production imagery placeholder — asset pending approval">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="bvp-media-icon">
+            <path d="M4 8.5a1.5 1.5 0 0 1 1.5-1.5h2l1-1.5h7l1 1.5h2A1.5 1.5 0 0 1 20 8.5v8A1.5 1.5 0 0 1 18.5 18h-13A1.5 1.5 0 0 1 4 16.5v-8Z" />
+            <circle cx="12" cy="12.5" r="3.25" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="bvp-section bvp-process" aria-labelledby="bvp-process-heading">
+      <div class="bvp-section-inner">
+        <h2 id="bvp-process-heading">A Simple, Thoughtful Production Process</h2>
+        <div class="bvp-process-grid">
+          {processSteps.map((step) => (
+            <div class="bvp-process-step">
+              <span class="bvp-process-number" aria-hidden="true">{step.number}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILT FOR -->
+    <section class="bvp-section bvp-built-for" aria-labelledby="bvp-built-for-heading">
+      <div class="bvp-section-inner bvp-narrow">
+        <h2 id="bvp-built-for-heading">Built for Organizations With Something Worth Communicating</h2>
+        <p>
+          Miami Tech Media works especially well with technology companies, startups, innovation organizations,
+          workforce development organizations, professional associations, community builders, and mission-driven
+          organizations.
+        </p>
+        <p>
+          Whether you're introducing your company, explaining an initiative, highlighting your people, or
+          documenting meaningful work, we help turn the story into content people can understand and trust.
+        </p>
+      </div>
+    </section>
+
+    <!-- STRATEGY MEETS PRODUCTION -->
+    <section class="bvp-section bvp-strategy" aria-labelledby="bvp-strategy-heading">
+      <div class="bvp-section-inner bvp-narrow">
+        <h2 id="bvp-strategy-heading">Strategy Meets Thoughtful Production</h2>
+        <p>
+          We're not interested in creating video simply because every organization is supposed to have video.
+        </p>
+        <p>
+          We start with what you're trying to accomplish, then determine what content will actually help.
+        </p>
+        <p>
+          With deep roots in Miami's technology and innovation community, Miami Tech Media brings strategic
+          thinking, visual storytelling, and hands-on production together in one collaborative creative partner.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="bvp-section bvp-faq" aria-labelledby="bvp-faq-heading">
+      <div class="bvp-section-inner bvp-narrow">
+        <h2 id="bvp-faq-heading">Brand Video Production FAQ</h2>
+        <div class="bvp-faq-list">
+          {faqs.map((faq) => (
+            <div class="bvp-faq-item">
+              <h3>{faq.question}</h3>
+              <p>{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="bvp-final-cta" id="final-cta" aria-labelledby="bvp-final-cta-heading">
+      <div class="bvp-section-inner bvp-narrow">
+        <h2 id="bvp-final-cta-heading">Have a Story Worth Telling?</h2>
+        <p>Let's talk about what you're trying to communicate and the content that can help you do it.</p>
+        <a
+          href={primaryCta.href}
+          target="_blank"
+          rel="noopener"
+          class="btn-primary"
+          id="bvp-final-cta-btn"
+        >
+          Schedule a Discovery Call
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="btn-arrow">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  // Discovery Call click tracking, consistent with the existing
+  // discovery_call_click event used across the homepage. New
+  // cta_location values ('branding_video_hero',
+  // 'branding_video_final_cta') are used so this page's clicks stay
+  // distinguishable from homepage hero/contact clicks with the same
+  // event name. Documented in the implementation report.
+  var bvpHeroCta = document.getElementById('bvp-hero-cta');
+  if (bvpHeroCta) {
+    bvpHeroCta.addEventListener('click', function () {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'discovery_call_click', cta_location: 'branding_video_hero' });
+    });
+  }
+
+  var bvpFinalCta = document.getElementById('bvp-final-cta-btn');
+  if (bvpFinalCta) {
+    bvpFinalCta.addEventListener('click', function () {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'discovery_call_click', cta_location: 'branding_video_final_cta' });
+    });
+  }
+</script>
+
+<style>
+  /* ── HERO ── */
+  .bvp-hero {
+    background: var(--rich);
+    padding: 6rem 1.5rem;
+  }
+
+  .bvp-hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: var(--type-eyebrow-size);
+    font-weight: 700;
+    letter-spacing: var(--type-eyebrow-tracking);
+    text-transform: uppercase;
+    margin: 0 0 1.1rem;
+  }
+
+  .bvp-hero h1 {
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+
+  .bvp-hero-sub {
+    font-size: 1.05rem;
+    color: rgba(248, 250, 252, 0.78);
+    line-height: 1.65;
+    max-width: 520px;
+    margin: 0 auto 2.25rem;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue);
+    color: #fff;
+    padding: 0.875rem 1.75rem;
+    border-radius: 6px;
+    font-size: var(--type-button-size);
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-icon,
+  .btn-arrow {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-primary:hover .btn-arrow {
+    transform: translateX(2px);
+  }
+
+  /* ── SHARED SECTION LAYOUT ── */
+  .bvp-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+  }
+
+  .bvp-narrow {
+    max-width: 720px;
+    text-align: center;
+  }
+
+  .bvp-section h2 {
+    font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+    font-weight: 700;
+    color: var(--rich);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.35rem;
+  }
+
+  .bvp-section p {
+    font-size: 1rem;
+    color: var(--mid);
+    line-height: 1.72;
+    margin: 0 0 1.1rem;
+  }
+
+  .bvp-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── STORY ── */
+  .bvp-story {
+    background: var(--white);
+  }
+
+  /* ── VIDEO TYPES ── */
+  .bvp-types {
+    background: var(--white);
+    border-top: 1px solid var(--gray);
+  }
+
+  .bvp-types h2 {
+    text-align: center;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bvp-types-intro {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 2.75rem;
+  }
+
+  .bvp-types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .bvp-type-card {
+    background: #fff;
+    border: 1px solid var(--gray);
+    border-radius: 12px;
+    padding: 1.75rem 1.5rem;
+  }
+
+  .bvp-type-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin: 0 0 0.6rem;
+  }
+
+  .bvp-type-card p {
+    font-size: 0.92rem;
+    color: var(--mid);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── CONTENT LIBRARY ── */
+  .bvp-library {
+    background: var(--light);
+    border-top: 1px solid var(--gray);
+  }
+
+  .bvp-library-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    align-items: center;
+    text-align: left;
+  }
+
+  .bvp-library-copy h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .bvp-library-media {
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid var(--gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    opacity: 0.55;
+  }
+
+  .bvp-media-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  /* ── PROCESS ── */
+  .bvp-process {
+    background: var(--white);
+    border-top: 1px solid var(--gray);
+  }
+
+  .bvp-process h2 {
+    text-align: center;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+  }
+
+  .bvp-process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .bvp-process-step {
+    text-align: center;
+  }
+
+  .bvp-process-number {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 0.75rem;
+  }
+
+  .bvp-process-step h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin: 0 0 0.6rem;
+  }
+
+  .bvp-process-step p {
+    font-size: 0.92rem;
+    color: var(--mid);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* ── BUILT FOR ── */
+  .bvp-built-for {
+    background: var(--light);
+    border-top: 1px solid var(--gray);
+  }
+
+  /* ── STRATEGY MEETS PRODUCTION ── */
+  .bvp-strategy {
+    background: var(--rich);
+  }
+
+  .bvp-strategy h2 {
+    color: #fff;
+  }
+
+  .bvp-strategy p {
+    color: rgba(248, 250, 252, 0.72);
+  }
+
+  /* ── FAQ ── */
+  .bvp-faq {
+    background: var(--white);
+    border-top: 1px solid var(--gray);
+  }
+
+  .bvp-faq h2 {
+    text-align: center;
+    margin-bottom: 2.75rem;
+  }
+
+  .bvp-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    text-align: left;
+  }
+
+  .bvp-faq-item {
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid var(--gray);
+  }
+
+  .bvp-faq-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .bvp-faq-item h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--rich);
+    margin: 0 0 0.6rem;
+  }
+
+  .bvp-faq-item p {
+    font-size: 0.95rem;
+    color: var(--mid);
+    line-height: 1.68;
+    margin: 0;
+  }
+
+  /* ── FINAL CTA ── */
+  .bvp-final-cta {
+    background: var(--light);
+    border-top: 1px solid var(--gray);
+  }
+
+  .bvp-final-cta h2 {
+    margin-bottom: 1rem;
+  }
+
+  .bvp-final-cta p {
+    margin-bottom: 2rem;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .bvp-hero {
+      padding: 4.5rem 1.5rem;
+    }
+
+    .bvp-section-inner {
+      padding: 3.5rem 1.5rem;
+    }
+
+    .bvp-types-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bvp-library-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .bvp-library-media {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .bvp-process-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bvp-types-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
